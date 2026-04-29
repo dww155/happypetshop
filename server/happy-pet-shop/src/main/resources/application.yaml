@@ -1,0 +1,36 @@
+spring:
+    application:
+        name: happy-pet-shop
+
+    datasource:
+        url: ${SPRING_DATASOURCE_URL}
+        username: ${SPRING_DATASOURCE_USERNAME}
+        password: ${SPRING_DATASOURCE_PASSWORD}
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+        properties:
+            hibernate:
+                format_sql: true
+    security:
+        oauth2:
+            client:
+                registration:
+                    google:
+                        client-id: YOUR_CLIENT_ID
+                        client-secret: YOUR_CLIENT_SECRET
+                        scope:
+                            - email
+                            - profile
+                            - https://www.googleapis.com/auth/user.phonenumbers.read
+
+server:
+    port: 8080
+    servlet:
+        context-path: /happy-pet-shop
+
+jwt:
+    key: ${JWT_KEY}
+    expiration-time: 3600 #seconds
+    refreshExpiration-time: 604800 #seconds
