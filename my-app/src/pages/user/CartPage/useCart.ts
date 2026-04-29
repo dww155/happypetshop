@@ -30,7 +30,7 @@ export function useCart(): UseCartReturn {
   const { user, setUser, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [selection, setSelection] = useState<Record<string, boolean>>({});
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const items: CartItemResponse[] = (user?.cart?.cartItems ?? []).filter(

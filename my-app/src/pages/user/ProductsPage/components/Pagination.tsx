@@ -15,7 +15,7 @@ export default function Pagination({
   totalPages,
   onPageChange,
   totalItems,
-  itemsPerPage,
+  // itemsPerPage,
   startIndex,
   endIndex,
 }: PaginationProps) {

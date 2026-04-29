@@ -1,5 +1,5 @@
 export const API_CONFIG = {
-    BASE_URL: "http://localhost:8080/happy-pet-shop",
+    BASE_URL: "http://47.129.193.121:8080/happy-pet-shop",
     ENDPOINTS: {
         AUTH: {
             LOGIN: "/auth/login",

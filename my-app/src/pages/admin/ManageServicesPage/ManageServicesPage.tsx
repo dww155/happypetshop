@@ -189,13 +189,13 @@ export default function ManageServicesPage() {
   };
 
   // Toggle category filter chips (allows multi-select)
-  const toggleCategoryFilter = (category: string) => {
-    setCategoryFilters((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category)
-        : [...prev, category]
-    );
-  };
+  // const toggleCategoryFilter = (category: string) => {
+  //   setCategoryFilters((prev) =>
+  //     prev.includes(category)
+  //       ? prev.filter((c) => c !== category)
+  //       : [...prev, category]
+  //   );
+  // };
 
   // Pagination
   const totalPages = Math.ceil(filteredProducts.length / pageSize);
