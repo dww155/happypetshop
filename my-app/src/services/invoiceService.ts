@@ -2,6 +2,7 @@ import { apiClient } from "../utils/apiClient";
 import type {
     InvoiceResponse,
     InvoiceCreationRequest,
+    InvoiceStatusUpdateRequest,
     ReviewRequest,
     ReviewResponse,
 } from "../types/invoiceTypes";
@@ -56,6 +57,21 @@ export const getInvoiceById = async (id: string): Promise<InvoiceResponse> => {
 
 export const deleteInvoice = async (id: string): Promise<void> => {
     await apiClient.delete(API_CONFIG.ENDPOINTS.INVOICE.DELETE(id));
+};
+
+export const updateInvoiceStatus = async (
+    id: string,
+    request: InvoiceStatusUpdateRequest
+): Promise<InvoiceResponse> => {
+    const res = await apiClient.put<ApiResponse<InvoiceResponse>>(
+        API_CONFIG.ENDPOINTS.INVOICE.UPDATE_STATUS(id),
+        request
+    );
+    const apiRes = res.data;
+    if (!apiRes.success || apiRes.data == null) {
+        throw new Error(apiRes.message ?? "Update invoice status failed");
+    }
+    return apiRes.data;
 };
 
 export const getInvoicesByCustomerId = async (
