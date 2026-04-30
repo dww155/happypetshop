@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import type { StaffResponse, StaffCreationRequest } from "../../../types/staffTypes";
 import * as staffService from "../../../services/staffService";
 import type {UserUpdateRequest} from "../../../types/userTypes.ts";
-import {updateUser} from "../../../services";
+import {updateUser} from "@/services/userService.ts";
 
 export type ViewMode = "grid" | "list";
 

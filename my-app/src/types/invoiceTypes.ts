@@ -28,6 +28,10 @@ export interface ReviewRequest {
     details: ReviewDetailRequest[];
 }
 
+export interface InvoiceStatusUpdateRequest {
+    paymentStatus: PaymentStatus;
+}
+
 export interface ReviewDetailResponse {
     productId: string;
     productName: string;

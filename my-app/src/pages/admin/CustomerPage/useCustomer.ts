@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import type { CustomerResponse } from "../../../types/customerTypes";
 import type {UserCreationRequest, UserUpdateRequest} from "../../../types/userTypes";
 import * as customerService from "../../../services/customerService";
-import {updateUser} from "../../../services";
+import {updateUser} from "@/services/userService.ts";
 
 export type ViewMode = "grid" | "list";
 

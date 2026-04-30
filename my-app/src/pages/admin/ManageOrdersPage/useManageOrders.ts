@@ -108,6 +108,31 @@ export function useManageOrders() {
     }
   }, [invoiceToDelete, closeDeleteModal, fetchInvoices, showToast]);
 
+  const handleUpdateInvoiceStatus = useCallback(
+    async (invoiceId: string, paymentStatus: string): Promise<boolean> => {
+      const nextStatus = paymentStatus.trim().toUpperCase();
+      if (!invoiceId || !nextStatus) return false;
+      try {
+        const updatedInvoice = await invoiceService.updateInvoiceStatus(invoiceId, {
+          paymentStatus: nextStatus,
+        });
+
+        setInvoices((prev) =>
+          prev.map((inv) => (inv.id === updatedInvoice.id ? updatedInvoice : inv))
+        );
+        setSelectedInvoice((prev) =>
+          prev?.id === updatedInvoice.id ? updatedInvoice : prev
+        );
+        showToast("Order status updated successfully!", "success");
+        return true;
+      } catch (e) {
+        showToast(e instanceof Error ? e.message : "Failed to update order status", "error");
+        return false;
+      }
+    },
+    [showToast]
+  );
+
   const clearFilters = useCallback(() => {
     setSearch("");
     setStatusFilter("");
@@ -136,6 +161,7 @@ export function useManageOrders() {
     openDeleteModal,
     closeDeleteModal,
     handleDeleteInvoice,
+    handleUpdateInvoiceStatus,
     clearFilters,
     fetchInvoices,
   };

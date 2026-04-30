@@ -1,5 +1,6 @@
 export const API_CONFIG = {
-    BASE_URL: "http://localhost:8080/happy-pet-shop",
+    BASE_URL: "http://47.129.193.121:8080/happy-pet-shop",
+    // BASE_URL: "http://localhost:8080/happy-pet-shop",
     ENDPOINTS: {
         AUTH: {
             LOGIN: "/auth/login",
@@ -54,6 +55,7 @@ export const API_CONFIG = {
             REVIEW: "/invoices/review",
             GET_ALL: "/invoices",
             GET_BY_ID: (id: string) => `/invoices/${id}`,
+            UPDATE_STATUS: (id: string) => `/invoices/${id}`,
             GET_BY_CUSTOMER: (customerId: string) => `/invoices/customer/${customerId}`,
             DELETE: (id: string) => `/invoices/${id}`,
         },

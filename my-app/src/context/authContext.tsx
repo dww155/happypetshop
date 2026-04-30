@@ -59,9 +59,15 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
   useEffect(() => {
     const introspect = async () => {
       try {
-        const tokenString = getAuthToken();
+        const tokenString = getAuthToken()?.trim();
 
-        if (!tokenString) {
+        console.log(tokenString);
+
+        if (
+          !tokenString ||
+          tokenString === "null" ||
+          tokenString === "undefined"
+        ) {
           setIsAuthenticated(false);
           return;
         }

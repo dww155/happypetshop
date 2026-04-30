@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { useProfile } from "../hooks/useProfile";
 import { User } from "lucide-react";
 
-const DEFAULT_AVATAR =
-  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop";
+// const DEFAULT_AVATAR =
+//   "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop";
 
 function displayName(firstName?: string, lastName?: string, username?: string): string {
   const parts = [firstName, lastName].filter(Boolean);
