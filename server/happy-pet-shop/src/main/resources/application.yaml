@@ -13,17 +13,18 @@ spring:
         properties:
             hibernate:
                 format_sql: true
+
     security:
         oauth2:
             client:
                 registration:
                     google:
-                        client-id: YOUR_CLIENT_ID
-                        client-secret: YOUR_CLIENT_SECRET
+                        client-id: ${GOOGLE_CLIENT_ID}
+                        client-secret: ${GOOGLE_CLIENT_SECRET}
                         scope:
-                            - email
+                            - openid
                             - profile
-                            - https://www.googleapis.com/auth/user.phonenumbers.read
+                            - email
 
 server:
     port: 8080
