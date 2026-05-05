@@ -13,6 +13,7 @@ import com.funcoders.happy_pet_shop.repository.ProductRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -45,12 +46,14 @@ public class ProductService {
         return productMapper.toResponse(productRepository.save(productEntity));
     }
 
+    @Cacheable(value = "products", key = "#id")
     public ProductResponse getProductById(UUID id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorType.NOT_FOUND));
         return productMapper.toResponse(product);
     }
 
+    @Cacheable(value = "products", key = "'all'")
     public List<ProductResponse> getAllProducts() {
         return productRepository.findAll()
                 .stream()
