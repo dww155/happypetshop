@@ -46,14 +46,12 @@ public class ProductService {
         return productMapper.toResponse(productRepository.save(productEntity));
     }
 
-    @Cacheable(value = "products", key = "#id")
     public ProductResponse getProductById(UUID id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorType.NOT_FOUND));
         return productMapper.toResponse(product);
     }
 
-    @Cacheable(value = "products", key = "'all'")
     public List<ProductResponse> getAllProducts() {
         return productRepository.findAll()
                 .stream()
