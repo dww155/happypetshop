@@ -114,6 +114,7 @@ export const logout = async (request?: LogoutRequest) => {
       );
     } catch {
       // ignore errors on logout
+      //test github
     }
   }
   removeAuthToken();

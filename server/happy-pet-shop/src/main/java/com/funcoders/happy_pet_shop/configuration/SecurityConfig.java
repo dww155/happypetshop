@@ -121,13 +121,4 @@ public class SecurityConfig {
 
         return source;
     }
-
-//    @Bean
-//    public JwtDecoder jwtDecoder() {
-//        SecretKeySpec secretKeySpec = new SecretKeySpec(SIGNER_KEY.getBytes(), "macSHA512");
-//        return NimbusJwtDecoder
-//                .withSecretKey(secretKeySpec)
-//                .macAlgorithm(MacAlgorithm.HS512)
-//                .build();
-//    }
 }
