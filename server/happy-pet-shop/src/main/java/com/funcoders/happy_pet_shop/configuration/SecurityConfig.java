@@ -49,6 +49,12 @@ public class SecurityConfig {
 
     };
 
+    private static String[] PUBLIC_GET_ENDPOINT = {
+            "/products/**",
+            "/categories/**",
+            "/pets/**"
+    };
+
     @NonFinal
     @Value("${jwt.key}")
     private String SIGNER_KEY;
@@ -69,7 +75,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/products/**", "/categories/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, PUBLIC_GET_ENDPOINT).permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2

@@ -12,12 +12,16 @@ import com.funcoders.happy_pet_shop.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.apache.logging.log4j.CloseableThreadContext;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -62,10 +66,10 @@ public class UserService {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @Transactional
     public void deleteUser(UUID id) {
-        if (!userRepository.existsById(id)) {
-            throw new AppException(ErrorType.USER_NOT_FOUND);
-        }
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorType.USER_NOT_FOUND));
+
+        user.setDeleteAt(LocalDateTime.now());
     }
 
     @Transactional
