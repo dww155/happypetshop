@@ -23,7 +23,8 @@ export const createPet = async (
 
 export const getAllPets = async (): Promise<PetResponse[]> => {
     const res = await apiClient.get<ApiResponse<PetResponse[]>>(
-        API_CONFIG.ENDPOINTS.PET.GET_ALL
+        API_CONFIG.ENDPOINTS.PET.GET_ALL,
+        {skipAuth : true}
     );
     return res.data?.data ?? [];
 };

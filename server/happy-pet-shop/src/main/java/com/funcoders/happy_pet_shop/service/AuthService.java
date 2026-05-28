@@ -39,10 +39,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.Set;
-import java.util.StringJoiner;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -69,6 +66,9 @@ public class AuthService {
     public AuthResponse authenticate(AuthRequest request) {
         User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new AppException(ErrorType.UNAUTHORIZED));
+
+        if (Objects.isNull(user.getDeleteAt()))
+            throw new AppException(ErrorType.UNAUTHORIZED);
 
         if(!passwordEncoder.matches(request.getPassword(), user.getPassword()))
             throw new AppException(ErrorType.UNAUTHORIZED);
@@ -176,10 +176,16 @@ public class AuthService {
     }
 
     private SignedJWT verifyToken(String token) throws ParseException, JOSEException {
+        // create verifier
         JWSVerifier verifier = new MACVerifier(SIGNER_KEY);
+
+        // parse token into JWT
         SignedJWT signedJWT = SignedJWT.parse(token);
 
+        // verify with verifier
         boolean verified = signedJWT.verify(verifier);
+
+        // get expiration time
         Date expirationTime = signedJWT.getJWTClaimsSet().getExpirationTime();
 
         if (!(verified && expirationTime.after(new Date())))

@@ -60,6 +60,8 @@ public class User {
     @Column(nullable = false)
     String password;
 
+    LocalDateTime deleteAt;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_roles",
