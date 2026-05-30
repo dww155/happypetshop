@@ -67,7 +67,7 @@ public class AuthService {
         User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new AppException(ErrorType.UNAUTHORIZED));
 
-        if (Objects.isNull(user.getDeleteAt()))
+        if (Objects.nonNull(user.getDeleteAt()))
             throw new AppException(ErrorType.UNAUTHORIZED);
 
         if(!passwordEncoder.matches(request.getPassword(), user.getPassword()))

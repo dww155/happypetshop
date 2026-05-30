@@ -74,6 +74,7 @@ public class User {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
+        deleteAt = null;
         if (status == null) {
             status = UserStatus.ACTIVATED;
         }
