@@ -70,7 +70,7 @@ public class AuthService {
         if (Objects.nonNull(user.getDeleteAt()))
             throw new AppException(ErrorType.UNAUTHORIZED);
 
-        if(!passwordEncoder.matches(request.getPassword(), user.getPassword()))
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword()))
             throw new AppException(ErrorType.UNAUTHORIZED);
 
         String token = generateToken(user);
@@ -86,9 +86,9 @@ public class AuthService {
         String token = request.getToken();
 
         boolean verified = true;
-        try{
+        try {
             verifyToken(token);
-        } catch(AppException e) {
+        } catch (AppException e) {
             verified = false;
         }
 
@@ -176,22 +176,21 @@ public class AuthService {
     }
 
     private SignedJWT verifyToken(String token) throws ParseException, JOSEException {
-        // create verifier
-        JWSVerifier verifier = new MACVerifier(SIGNER_KEY);
-
         // parse token into JWT
         SignedJWT signedJWT = SignedJWT.parse(token);
 
-        // verify with verifier
+        // create verifier and verify with verifier
+        JWSVerifier verifier = new MACVerifier(SIGNER_KEY);
         boolean verified = signedJWT.verify(verifier);
 
-        // get expiration time
+        // get expiration time and verify with expiration time
         Date expirationTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+        Date now = new Date();
+        boolean validExpiry = now.before(expirationTime);
 
-        if (!(verified && expirationTime.after(new Date())))
-            throw new AppException(ErrorType.UNAUTHORIZED);
+        boolean isLoggedOut = invalidatedTokenRepository.existsById(signedJWT.getJWTClaimsSet().getJWTID());
 
-        if (invalidatedTokenRepository.existsById(signedJWT.getJWTClaimsSet().getJWTID()))
+        if (!verified || !validExpiry || isLoggedOut)
             throw new AppException(ErrorType.UNAUTHORIZED);
 
         return signedJWT;

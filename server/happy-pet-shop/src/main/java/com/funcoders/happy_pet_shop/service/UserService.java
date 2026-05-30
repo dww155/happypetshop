@@ -74,8 +74,16 @@ public class UserService {
 
     @Transactional
     public UserResponse updateUser(UUID id, UserUpdateRequest request) {
+        // get user from database
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorType.USER_NOT_FOUND));
+
+        // check if user has right to update
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        boolean isAdmin = username.equals("admin");
+        boolean isOwner = username.equals(user.getUsername());
+        if (!isOwner && !isAdmin)
+            throw new AppException(ErrorType.UNAUTHORIZED);
 
         userMapper.updateUser(user, request);
 

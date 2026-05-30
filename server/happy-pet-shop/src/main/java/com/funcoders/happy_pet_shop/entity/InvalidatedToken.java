@@ -1,5 +1,6 @@
 package com.funcoders.happy_pet_shop.entity;
 
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -18,5 +19,7 @@ import java.util.Date;
 public class InvalidatedToken {
     @Id
     String id;
+
+    @Nonnull
     Date expiryTime;
 }
