@@ -79,7 +79,6 @@ public class Invoice {
     // ===== LIFECYCLE =====
     @PrePersist
     protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
         this.status = PaymentStatus.PENDING;
 
         if (realAmount == null || realAmount.compareTo(BigDecimal.ZERO) == 0) {

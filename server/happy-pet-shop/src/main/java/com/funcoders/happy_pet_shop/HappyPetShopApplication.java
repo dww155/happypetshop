@@ -11,5 +11,4 @@ public class HappyPetShopApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HappyPetShopApplication.class, args);
 	}
-
 }

@@ -1,5 +1,7 @@
 "use client";
 
+import {ArrowUpDown, BadgeDollarSign} from "lucide-react";
+
 interface PriceFilterProps {
   minPrice: number;
   maxPrice: number;
@@ -39,11 +41,13 @@ export default function PriceFilter({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h3 className="text-xl font-bold text-gray-800 mb-4">Lọc theo giá</h3>
+    <div>
+      <h3 className="mb-4 flex items-center gap-2 text-xl font-bold text-[#3d2b1f]">
+        <BadgeDollarSign className="h-5 w-5 text-[#9f5f36]" /> Lọc theo giá
+      </h3>
 
       <div className="mb-6">
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
+        <label className="block text-sm font-semibold text-[#6d5a49] mb-2">
           Chọn khoảng giá
         </label>
         <select
@@ -54,7 +58,7 @@ export default function PriceFilter({
               handlePriceRangeSelect(selected);
             }
           }}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white cursor-pointer"
+          className="pet-focus w-full cursor-pointer rounded-lg border border-[#d8c1ab] bg-[#fffdf8] px-4 py-3 text-[#3d2b1f]"
           aria-label="Chọn khoảng giá"
         >
           {PRICE_RANGES.map((range) => (
@@ -71,12 +75,14 @@ export default function PriceFilter({
       </div>
 
 
-      <h3 className="text-xl font-bold text-gray-800 mb-4">Sắp xếp</h3>
+      <h3 className="mb-4 flex items-center gap-2 text-xl font-bold text-[#3d2b1f]">
+        <ArrowUpDown className="h-5 w-5 text-[#9f5f36]" /> Sắp xếp
+      </h3>
       <div className="mb-6">
         <select
           value={currentSort}
           onChange={(e) => onSort(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white cursor-pointer"
+          className="pet-focus w-full cursor-pointer rounded-lg border border-[#d8c1ab] bg-[#fffdf8] px-4 py-3 text-[#3d2b1f]"
           aria-label="Chọn cách sắp xếp"
         >
           <option value="price-asc">Giá: Thấp → Cao</option>

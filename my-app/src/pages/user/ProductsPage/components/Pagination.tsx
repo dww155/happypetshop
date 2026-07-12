@@ -69,13 +69,13 @@ export default function Pagination({
   const pageNumbers = getPageNumbers();
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 mt-8">
+    <div className="pet-surface rounded-lg p-6 mt-8">
       <div className="text-center mb-6">
-        <p className="text-gray-700 font-medium">
+        <p className="text-[#6d5a49] font-medium">
           Hiển thị{" "}
-          <span className="font-bold text-blue-600">{startIndex + 1}</span> -{" "}
-          <span className="font-bold text-blue-600">{Math.min(endIndex, totalItems)}</span> trong{" "}
-          <span className="font-bold text-blue-600">{totalItems}</span> kết quả
+          <span className="font-bold text-[#9f5f36]">{startIndex + 1}</span> -{" "}
+          <span className="font-bold text-[#9f5f36]">{Math.min(endIndex, totalItems)}</span> trong{" "}
+          <span className="font-bold text-[#9f5f36]">{totalItems}</span> kết quả
         </p>
       </div>
 
@@ -83,7 +83,7 @@ export default function Pagination({
         <button
           onClick={handlePrevious}
           disabled={currentPage === 1}
-          className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
+          className="px-4 py-2 border border-[#d8c1ab] rounded-lg hover:bg-[#f5eadc] disabled:opacity-50 disabled:cursor-not-allowed transition font-medium text-[#4b3525]"
           aria-label="Trang trước"
         >
           ← Trước
@@ -92,15 +92,15 @@ export default function Pagination({
         {pageNumbers.map((page, index) => (
           <div key={index}>
             {page === "..." ? (
-              <span className="px-2 py-2 text-gray-500">...</span>
+              <span className="px-2 py-2 text-[#8f7b6b]">...</span>
             ) : (
               <button
                 onClick={() => onPageChange(page as number)}
                 disabled={page === currentPage}
                 className={`px-4 py-2 rounded-lg transition font-medium ${
                   page === currentPage
-                    ? "bg-blue-600 text-white"
-                    : "border border-gray-300 hover:bg-gray-100"
+                    ? "bg-[#9f5f36] text-white"
+                    : "border border-[#d8c1ab] hover:bg-[#f5eadc] text-[#4b3525]"
                 }`}
                 aria-label={`Trang ${page}`}
                 aria-current={page === currentPage ? "page" : undefined}
@@ -114,7 +114,7 @@ export default function Pagination({
         <button
           onClick={handleNext}
           disabled={currentPage === totalPages}
-          className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium"
+          className="px-4 py-2 border border-[#d8c1ab] rounded-lg hover:bg-[#f5eadc] disabled:opacity-50 disabled:cursor-not-allowed transition font-medium text-[#4b3525]"
           aria-label="Trang sau"
         >
           Sau →

@@ -13,6 +13,7 @@ import Loader from "@/components/ui/loader";
 import axios from "axios";
 import {getAllProducts} from "@/services/productService";
 import {getAllCategories} from "@/services/categoryService";
+import {Bone, Sparkles} from "lucide-react";
 
 export default function ProductsPage() {
   const ITEMS_PER_PAGE = 12;
@@ -72,10 +73,10 @@ export default function ProductsPage() {
   });
 
   return (
-      <div className="min-h-screen bg-[#FFF8F0] font-body">
+      <div className="pet-page min-h-screen font-body">
         {error && (
             <div className="max-w-7xl mx-auto px-4 mt-4">
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg flex justify-between items-center shadow">
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex justify-between items-center shadow-sm">
 
                 <span>{error}</span>
 
@@ -90,6 +91,31 @@ export default function ProductsPage() {
             </div>
         )}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <section className="mb-8 overflow-hidden rounded-lg bg-[#6f4a2f] text-white shadow-xl shadow-[#6f4a2f]/15">
+            <div className="grid gap-8 px-6 py-8 md:grid-cols-[1.2fr_0.8fr] md:px-10">
+              <div>
+                <div className="mb-4 inline-flex items-center gap-2 rounded-lg bg-white/12 px-3 py-2 text-sm font-semibold text-[#ffe2bd]">
+                  <Sparkles className="h-4 w-4" /> Chọn đồ xịn cho boss nhỏ
+                </div>
+                <h1 className="max-w-2xl text-3xl font-black leading-tight sm:text-4xl">
+                  Góc mua sắm ấm áp cho thú cưng khỏe mạnh, vui vẻ mỗi ngày
+                </h1>
+                <p className="mt-4 max-w-xl text-[#f4ddc6]">
+                  Thức ăn, phụ kiện và đồ chăm sóc được sắp xếp dễ tìm để bạn chọn nhanh món phù hợp.
+                </p>
+              </div>
+              <div className="grid content-end gap-3 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
+                {["Dinh dưỡng", "Đồ chơi", "Chăm sóc", "Phụ kiện"].map((item) => (
+                  <div key={item} className="flex items-center gap-3 rounded-lg bg-white/10 p-4 backdrop-blur">
+                    <span className="grid h-9 w-9 place-items-center rounded-lg bg-[#f7b267] text-[#4b3525]">
+                      <Bone className="h-5 w-5" />
+                    </span>
+                    <span className="font-bold">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
 
           <div className="mb-8">
             <SearchBar onSearch={handleSearch}/>
@@ -100,7 +126,7 @@ export default function ProductsPage() {
 
             <div className="lg:col-span-1 space-y-6">
 
-              <div className="bg-white rounded-2xl shadow-md p-5">
+              <div className="pet-surface rounded-lg p-5">
                 <CategoryFilter
                     categories={categories}
                     selectedCategories={selectedCategories}
@@ -109,7 +135,7 @@ export default function ProductsPage() {
                 />
               </div>
 
-              <div className="bg-white rounded-2xl shadow-md p-5">
+              <div className="pet-surface rounded-lg p-5">
                 <PriceFilter
                     minPrice={minPrice}
                     maxPrice={maxPrice}
@@ -129,7 +155,7 @@ export default function ProductsPage() {
 
                 <p className="text-gray-700 text-lg">
                   Tìm thấy{" "}
-                  <span className="font-bold text-[#ff8e53]">
+                  <span className="font-bold text-[#9f5f36]">
                 {totalItems}
               </span>{" "}
                   sản phẩm
@@ -161,11 +187,11 @@ export default function ProductsPage() {
 
                   /* EMPTY STATE */
 
-                  <div className="bg-white rounded-2xl shadow-md p-12 text-center">
+                  <div className="pet-surface rounded-lg p-12 text-center">
 
                     <div className="text-6xl mb-4">🐶</div>
 
-                    <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                    <h2 className="text-2xl font-bold text-[#3d2b1f] mb-2">
                       Không tìm thấy sản phẩm
                     </h2>
 
@@ -175,7 +201,7 @@ export default function ProductsPage() {
 
                     <button
                         onClick={resetFilters}
-                        className="bg-[#ff8e53] hover:bg-[#ff7a3d] text-white font-semibold py-2 px-6 rounded-lg transition"
+                        className="bg-[#9f5f36] hover:bg-[#7d4525] text-white font-semibold py-2 px-6 rounded-lg transition"
                     >
                       Xóa tất cả bộ lọc
                     </button>
