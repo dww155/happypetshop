@@ -3,6 +3,7 @@
 import {useEffect, useState} from "react";
 import {Link, useLocation} from "react-router-dom";
 import {useAuth} from "../context/authContext.tsx";
+import {Bone, FileText, Heart, LogIn, Menu, PawPrint, ShoppingCart, User, X} from "lucide-react";
 
 export default function UserHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,34 +33,32 @@ export default function UserHeader() {
   }, [lastScrollY]);
 
   const navItem =
-      "px-4 py-2 rounded-full transition-all duration-300 font-medium flex items-center gap-1";
+      "px-3 py-2 rounded-lg transition-all duration-200 font-semibold flex items-center gap-2 text-sm";
 
-  const activeItem = "bg-white text-blue-600 shadow";
+  const activeItem = "bg-[#fff8ed] text-[#8f4d25] shadow-sm";
+  const inactiveItem = "text-[#fffaf2] hover:bg-white/15";
 
   return (
       <>
-        <style>
-          <style>
-            {`
-              header {
-                font-family: Fredoka, sans-serif;
-              }
-            `}
-          </style>
-        </style>
         <header
-            className={`sticky top-0 w-full z-50 backdrop-blur-md bg-gradient-to-r from-[#ff8e53] via-[#ff9a5a] to-[#ffb347]border-b border-white/30text-white shadow-lg transition-all duration-300
+            className={`sticky top-0 w-full z-50 border-b border-white/25 bg-[#9f5f36]/95 text-white shadow-lg shadow-[#6f3a1d]/10 backdrop-blur-xl transition-all duration-300
           ${showHeader ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"}`}
         >
-          <nav className="max-w-7xl mx-auto px-6">
-            <div className="flex justify-between items-center h-16">
+          <nav className="max-w-7xl mx-auto px-4 sm:px-6">
+            <div className="flex justify-between items-center h-20">
 
               {/* Logo */}
               <Link
                   to="/user/products"
-                  className="flex items-center gap-2 text-2xl font-bold tracking-wide hover:scale-105 transition"
+                  className="flex items-center gap-3 text-xl sm:text-2xl font-black tracking-wide transition hover:opacity-95"
               >
-                🐾 <span>Happy Pet Shop</span>
+                <span className="grid h-11 w-11 place-items-center rounded-lg bg-[#fff8ed] text-[#9f5f36] shadow-sm">
+                  <PawPrint className="h-6 w-6" />
+                </span>
+                <span className="leading-tight">
+                  Happy Pet
+                  <span className="block text-xs font-semibold uppercase tracking-[0.22em] text-[#f9dcb7]">shop</span>
+                </span>
               </Link>
 
               {/* Desktop Menu */}
@@ -68,19 +67,19 @@ export default function UserHeader() {
                 <Link
                     to="/user/products"
                     className={`${navItem} ${
-                        isActive("/user/products") ? activeItem : "hover:bg-white/20"
+                        isActive("/user/products") ? activeItem : inactiveItem
                     }`}
                 >
-                  🦴 Sản phẩm
+                  <Bone className="h-4 w-4" /> Sản phẩm
                 </Link>
 
                 <Link
                     to="/user/pets"
                     className={`${navItem} ${
-                        isActive("/user/pets") ? activeItem : "hover:bg-white/20"
+                        isActive("/user/pets") ? activeItem : inactiveItem
                     }`}
                 >
-                  🐕 Thú cưng
+                  <Heart className="h-4 w-4" /> Thú cưng
                 </Link>
 
                 {/*<Link*/}
@@ -95,10 +94,10 @@ export default function UserHeader() {
                 <Link
                     to="/user/cart"
                     className={`${navItem} ${
-                        isActive("/user/cart") ? activeItem : "hover:bg-white/20"
+                        isActive("/user/cart") ? activeItem : inactiveItem
                     }`}
                 >
-                  🛒 Giỏ hàng
+                  <ShoppingCart className="h-4 w-4" /> Giỏ hàng
                 </Link>
 
                 {user ? (
@@ -106,26 +105,26 @@ export default function UserHeader() {
                       <Link
                           to="/user/invoices"
                           className={`${navItem} ${
-                              isActive("/user/invoices") ? activeItem : "hover:bg-white/20"
+                              isActive("/user/invoices") ? activeItem : inactiveItem
                           }`}
                       >
-                        🧾 Hóa đơn
+                        <FileText className="h-4 w-4" /> Hóa đơn
                       </Link>
                       <Link
                         to="/user/profile"
                         className={`${navItem} ${
-                            isActive("/user/profile") ? activeItem : "hover:bg-white/20"
+                            isActive("/user/profile") ? activeItem : inactiveItem
                         }`}
                       >
-                        🐶 Tài khoản
+                        <User className="h-4 w-4" /> Tài khoản
                       </Link>
                     </>
                 ) : (
                     <Link
                         to="/login"
-                        className={`${navItem} hover:bg-white/20`}
+                        className={`${navItem} ${inactiveItem}`}
                     >
-                      🔑 Đăng nhập
+                      <LogIn className="h-4 w-4" /> Đăng nhập
                     </Link>
                 )}
 
@@ -134,20 +133,10 @@ export default function UserHeader() {
               {/* Mobile button */}
               <button
                   onClick={toggleMenu}
-                  className="md:hidden p-2 rounded-lg hover:bg-white/20 transition"
+                  className="md:hidden p-2 rounded-lg hover:bg-white/15 transition"
+                  aria-label="Mở menu"
               >
-                <svg
-                    className="h-6 w-6"
-                    stroke="currentColor"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                >
-                  {isMenuOpen ? (
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/>
-                  ) : (
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/>
-                  )}
-                </svg>
+                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
             </div>
 
@@ -159,20 +148,20 @@ export default function UserHeader() {
                       to="/user/products"
                       onClick={() => setIsMenuOpen(false)}
                       className={`block ${navItem} ${
-                          isActive("/user/products") ? activeItem : "hover:bg-white/20"
+                          isActive("/user/products") ? activeItem : inactiveItem
                       }`}
                   >
-                    🦴 Sản phẩm
+                    <Bone className="h-4 w-4" /> Sản phẩm
                   </Link>
 
                   <Link
                       to="/user/pets"
                       onClick={() => setIsMenuOpen(false)}
                       className={`block ${navItem} ${
-                          isActive("/user/pets") ? activeItem : "hover:bg-white/20"
+                          isActive("/user/pets") ? activeItem : inactiveItem
                       }`}
                   >
-                    🐕 Thú cưng
+                    <Heart className="h-4 w-4" /> Thú cưng
                   </Link>
 
                   {/*<Link*/}
@@ -189,10 +178,10 @@ export default function UserHeader() {
                       to="/user/cart"
                       onClick={() => setIsMenuOpen(false)}
                       className={`block ${navItem} ${
-                          isActive("/user/cart") ? activeItem : "hover:bg-white/20"
+                          isActive("/user/cart") ? activeItem : inactiveItem
                       }`}
                   >
-                    🛒 Giỏ hàng
+                    <ShoppingCart className="h-4 w-4" /> Giỏ hàng
                   </Link>
 
                   {user ? (
@@ -201,28 +190,28 @@ export default function UserHeader() {
                             to="/user/invoices"
                             onClick={() => setIsMenuOpen(false)}
                             className={`block ${navItem} ${
-                                isActive("/user/invoices") ? activeItem : "hover:bg-white/20"
+                                isActive("/user/invoices") ? activeItem : inactiveItem
                             }`}
                         >
-                          🧾 Hóa đơn
+                          <FileText className="h-4 w-4" /> Hóa đơn
                         </Link>
                         <Link
                             to="/user/profile"
                             onClick={() => setIsMenuOpen(false)}
                             className={`block ${navItem} ${
-                                isActive("/user/profile") ? activeItem : "hover:bg-white/20"
+                                isActive("/user/profile") ? activeItem : inactiveItem
                             }`}
                         >
-                          🐶 Tài khoản
+                          <User className="h-4 w-4" /> Tài khoản
                         </Link>
                       </>
                   ) : (
                       <Link
                           to="/login"
                           onClick={() => setIsMenuOpen(false)}
-                          className={`block ${navItem} hover:bg-white/20`}
+                          className={`block ${navItem} ${inactiveItem}`}
                       >
-                        🔑 Đăng nhập
+                        <LogIn className="h-4 w-4" /> Đăng nhập
                       </Link>
                   )}
 

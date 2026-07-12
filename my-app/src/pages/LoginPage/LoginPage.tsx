@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {useLogin} from "./useLogin.ts";
 import Loader from "../../components/ui/loader.tsx";
 import {Link, useLocation} from "react-router-dom";
+import {Eye, EyeOff, PawPrint} from "lucide-react";
 
 export default function LoginPage() {
   const {
@@ -26,13 +27,9 @@ export default function LoginPage() {
 
   return (
       <div
-          className="min-h-screen bg-gradient-to-br from-emerald-100 via-sky-100 to-indigo-100 flex items-center justify-center px-4 relative overflow-hidden">
+          className="pet-page min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
 
         {/* Paw decoration */}
-        <div className="absolute text-7xl opacity-10 top-10 left-10">🐾</div>
-        <div className="absolute text-7xl opacity-10 bottom-20 right-20">🐾</div>
-        <div className="absolute text-6xl opacity-10 top-1/2 left-1/4">🐾</div>
-
         {/* Loader overlay */}
         {isLoading && (
             <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50">
@@ -45,24 +42,24 @@ export default function LoginPage() {
                 isLoading ? "opacity-40 pointer-events-none scale-95" : ""
             }`}
         >
-          <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-white/50">
+          <div className="pet-card rounded-lg p-8">
 
             {/* Header */}
             <div className="text-center mb-8">
 
-              <div className="flex justify-center mb-4 text-5xl">
-                🐶🐱
+              <div className="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-lg bg-[#f7b267] text-[#4b3525]">
+                <PawPrint className="h-9 w-9" />
               </div>
 
-              <h2 className="text-3xl font-bold text-slate-800">
+              <h2 className="text-3xl font-black text-[#3d2b1f]">
                 Happy Pet Shop
               </h2>
 
-              <p className="text-slate-500 text-sm mt-1">
+              <p className="text-[#6d5a49] text-sm mt-1">
                 Chăm sóc thú cưng với tình yêu
               </p>
 
-              <div className="mt-4 text-lg font-semibold text-emerald-600">
+              <div className="mt-4 text-lg font-semibold text-[#9f5f36]">
                 Đăng nhập hệ thống
               </div>
             </div>
@@ -78,8 +75,8 @@ export default function LoginPage() {
 
               {/* username */}
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-1">
-                  username
+                <label className="block text-sm font-semibold text-[#4b3525] mb-1">
+                  Tên đăng nhập
                 </label>
 
                 <input
@@ -93,7 +90,7 @@ export default function LoginPage() {
                     className={`w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 transition ${
                         errors.username
                             ? "border-red-500 focus:ring-red-400"
-                            : "border-slate-200 focus:ring-emerald-400"
+                            : "border-[#d8c1ab] focus:ring-[#f7b267]"
                     }`}
                 />
 
@@ -104,8 +101,8 @@ export default function LoginPage() {
 
               {/* Password */}
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-1">
-                  Password
+                <label className="block text-sm font-semibold text-[#4b3525] mb-1">
+                  Mật khẩu
                 </label>
 
                 <div className="relative">
@@ -120,7 +117,7 @@ export default function LoginPage() {
                       className={`w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 transition pr-12 ${
                           errors.password
                               ? "border-red-500 focus:ring-red-400"
-                              : "border-slate-200 focus:ring-emerald-400"
+                              : "border-[#d8c1ab] focus:ring-[#f7b267]"
                       }`}
                   />
 
@@ -128,9 +125,10 @@ export default function LoginPage() {
                   <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-1 text-[#8f7b6b] hover:bg-[#f5eadc] hover:text-[#4b3525]"
+                      aria-label={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
                   >
-                    {showPassword ? "🧐" : "😎"}
+                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                   </button>
                 </div>
 
@@ -142,17 +140,17 @@ export default function LoginPage() {
               {/* Options */}
               <div className="flex items-center justify-between text-sm">
 
-                <label className="flex items-center gap-2 text-slate-600">
+                <label className="flex items-center gap-2 text-[#6d5a49]">
                   <input
                       type="checkbox"
-                      className="w-4 h-4 text-emerald-600 rounded focus:ring-emerald-400"
+                      className="w-4 h-4 accent-[#9f5f36] rounded focus:ring-[#f7b267]"
                   />
                   Ghi nhớ
                 </label>
 
                 <Link
                     to="/forgot-password"
-                    className="text-emerald-600 hover:text-emerald-700 font-medium"
+                    className="text-[#9f5f36] hover:text-[#6f4a2f] font-medium"
                 >
                   Quên mật khẩu?
                 </Link>
@@ -162,7 +160,7 @@ export default function LoginPage() {
               <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 transition disabled:opacity-50"
+                  className="w-full py-3 rounded-lg font-semibold text-white bg-[#9f5f36] hover:bg-[#7d4525] transition disabled:opacity-50"
               >
                 {isLoading ? "Đang đăng nhập..." : "Đăng nhập"}
               </button>
@@ -175,15 +173,15 @@ export default function LoginPage() {
                 notAdmin &&
                 <>
                   <div className="flex items-center my-6">
-                    <div className="flex-1 border-t border-slate-200"></div>
-                    <span className="px-3 text-sm text-slate-400">hoặc</span>
-                    <div className="flex-1 border-t border-slate-200"></div>
+                    <div className="flex-1 border-t border-[#ead9c6]"></div>
+                    <span className="px-3 text-sm text-[#8f7b6b]">hoặc</span>
+                    <div className="flex-1 border-t border-[#ead9c6]"></div>
                   </div>
-                  <p className="text-center text-sm text-slate-600">
+                  <p className="text-center text-sm text-[#6d5a49]">
                     Chưa có tài khoản?{" "}
                     <Link
                         to="/register"
-                        className="font-semibold text-emerald-600 hover:text-emerald-700"
+                        className="font-semibold text-[#9f5f36] hover:text-[#6f4a2f]"
                     >
                       Đăng ký ngay
                     </Link>
@@ -195,7 +193,7 @@ export default function LoginPage() {
 
           {/* Footer */
           }
-          <p className="text-center text-xs text-slate-400 mt-6">
+          <p className="text-center text-xs text-[#8f7b6b] mt-6">
             © 2026 Happy Pet Shop
           </p>
         </div>

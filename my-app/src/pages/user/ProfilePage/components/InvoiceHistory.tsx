@@ -111,7 +111,7 @@ export default function InvoiceHistory() {
         <select
           value={sortBy}
           onChange={(e) => { setSortBy(e.target.value as SortOption); goToPage(1); }}
-          className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white"
+          className="px-4 py-2 border border-[#d8c1ab] rounded-lg focus:ring-2 focus:ring-[#f7b267] bg-[#fffdf8]"
         >
           <option value="date-desc">Ngày mới nhất</option>
           <option value="date-asc">Ngày cũ nhất</option>
@@ -120,26 +120,26 @@ export default function InvoiceHistory() {
         </select>
       </div>
 
-      <div className="hidden md:block bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="hidden md:block pet-card rounded-lg overflow-hidden">
         <table className="w-full">
-          <thead className="bg-gray-100 border-b border-gray-200">
+          <thead className="bg-[#f5eadc] border-b border-[#ead9c6]">
             <tr>
               {["Mã hóa đơn", "Ngày", "Số mục", "Tổng tiền", "Trạng thái", "Hành động"].map(h => (
-                <th key={h} className="px-6 py-3 text-left text-sm font-semibold text-gray-700">{h}</th>
+                <th key={h} className="px-6 py-3 text-left text-sm font-semibold text-[#4b3525]">{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {currentInvoices.map((invoice) => (
-              <tr key={invoice.id} className="border-b border-gray-200 hover:bg-gray-50 transition">
-                <td className="px-6 py-4 text-sm font-semibold text-gray-800">{invoice.id}</td>
-                <td className="px-6 py-4 text-sm text-gray-600">{fmtDate(invoice.date)}</td>
-                <td className="px-6 py-4 text-sm text-gray-600">{invoice.items} sản phẩm</td>
-                <td className="px-6 py-4 text-sm font-semibold text-blue-600">{fmtMoney(invoice.totalAmount)}</td>
+              <tr key={invoice.id} className="border-b border-[#ead9c6] hover:bg-[#fff8ed] transition">
+                <td className="px-6 py-4 text-sm font-semibold text-[#3d2b1f]">{invoice.id}</td>
+                <td className="px-6 py-4 text-sm text-[#6d5a49]">{fmtDate(invoice.date)}</td>
+                <td className="px-6 py-4 text-sm text-[#6d5a49]">{invoice.items} sản phẩm</td>
+                <td className="px-6 py-4 text-sm font-semibold text-[#9f5f36]">{fmtMoney(invoice.totalAmount)}</td>
                 <td className="px-6 py-4 text-sm">
                   <StatusBadge status={invoice.status} /></td>
                 <td className="px-6 py-4 text-center text-sm">
-                  <button className="text-blue-600 hover:text-blue-800 font-semibold">Xem chi tiết</button>
+                  <button className="text-[#9f5f36] hover:text-[#6f4a2f] font-semibold">Xem chi tiết</button>
                 </td>
               </tr>
             ))}
@@ -149,22 +149,22 @@ export default function InvoiceHistory() {
 
       <div className="md:hidden space-y-4">
         {currentInvoices.map((invoice) => (
-          <div key={invoice.id} className="bg-white rounded-lg shadow-md p-4 border-l-4 border-blue-600">
+          <div key={invoice.id} className="pet-card rounded-lg p-4 border-l-4 border-[#9f5f36]">
             <div className="flex items-start justify-between mb-3">
               <div>
-                <p className="font-bold text-gray-800">{invoice.id}</p>
-                <p className="text-sm text-gray-600">{fmtDate(invoice.date)}</p>
+                <p className="font-bold text-[#3d2b1f]">{invoice.id}</p>
+                <p className="text-sm text-[#6d5a49]">{fmtDate(invoice.date)}</p>
               </div>
               <StatusBadge status={invoice.status} />
             </div>
-            <div className="space-y-2 mb-4 text-sm text-gray-600">
-              <p><span className="font-semibold text-gray-700">Số mục:</span> {invoice.items}</p>
+            <div className="space-y-2 mb-4 text-sm text-[#6d5a49]">
+              <p><span className="font-semibold text-[#4b3525]">Số mục:</span> {invoice.items}</p>
               <p>
-                <span className="font-semibold text-gray-700">Tổng tiền:</span>
-                <span className="text-lg font-bold text-blue-600 ml-2">{fmtMoney(invoice.totalAmount)}</span>
+                <span className="font-semibold text-[#4b3525]">Tổng tiền:</span>
+                <span className="text-lg font-bold text-[#9f5f36] ml-2">{fmtMoney(invoice.totalAmount)}</span>
               </p>
             </div>
-            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg">
+            <button className="w-full bg-[#9f5f36] hover:bg-[#7d4525] text-white font-semibold py-2 rounded-lg">
               Xem chi tiết
             </button>
           </div>
@@ -172,13 +172,13 @@ export default function InvoiceHistory() {
       </div>
 
       {totalCount === 0 ? (
-        <div className="text-center py-12 bg-white rounded-lg">
-          <p className="text-gray-600">📄 Bạn chưa có hóa đơn nào</p>
+        <div className="pet-card text-center py-12 rounded-lg">
+          <p className="text-[#6d5a49]">📄 Bạn chưa có hóa đơn nào</p>
         </div>
       ) : (
         <div className="flex flex-col items-center gap-4">
           <Pagination current={currentPage} total={totalPages} onChange={goToPage} />
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-[#6d5a49]">
              Hiển thị {startIndex + 1}–{startIndex + currentInvoices.length} trong {totalCount} hóa đơn
           </p>
         </div>

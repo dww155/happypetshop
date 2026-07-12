@@ -1,10 +1,13 @@
 package com.funcoders.happy_pet_shop.configuration;
 
+import com.funcoders.happy_pet_shop.constant.Unit;
 import com.funcoders.happy_pet_shop.constant.UserRole;
 import com.funcoders.happy_pet_shop.entity.Category;
+import com.funcoders.happy_pet_shop.entity.Product;
 import com.funcoders.happy_pet_shop.entity.Role;
 import com.funcoders.happy_pet_shop.entity.User;
 import com.funcoders.happy_pet_shop.repository.CategoryRepository;
+import com.funcoders.happy_pet_shop.repository.ProductRepository;
 import com.funcoders.happy_pet_shop.repository.RoleRepository;
 import com.funcoders.happy_pet_shop.repository.UserRepository;
 import lombok.AccessLevel;
@@ -17,8 +20,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -29,12 +33,18 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 
     UserRepository userRepository;
     RoleRepository roleRepository;
+
+    ProductRepository productRepository;
+
     CategoryRepository categoryRepository;
+
     PasswordEncoder passwordEncoder;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
         log.info("Application init...");
+
+//        seedProductsIfEmpty();
 
         if (!userRepository.existsByUsername("admin")) {
 
@@ -96,5 +106,65 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
         );
         categoryRepository.saveAll(categories);
         log.info("Seeded {} pet shop categories", categories.size());
+    }
+
+    private void seedProductsIfEmpty() {
+
+//        if (productRepository.count() > 0) {
+//            return;
+//        }
+
+        List<Category> categories = categoryRepository.findAll();
+
+        Random random = new Random();
+
+        String[] brands = {
+                "Royal Canin",
+                "Pedigree",
+                "Whiskas",
+                "Purina",
+                "Me-O",
+                "SmartHeart",
+                "Catsrang",
+                "Kit Cat"
+        };
+
+        String[] origins = {
+                "Vietnam",
+                "Thailand",
+                "Japan",
+                "USA",
+                "France",
+                "Germany"
+        };
+
+        Unit[] units = Unit.values();
+
+        List<Product> products = new ArrayList<>();
+
+        for (int i = 1; i <= 100; i++) {
+
+            Category category = categories.get(random.nextInt(categories.size()));
+
+            Product product = Product.builder()
+                    .name("Product " + i)
+                    .description("Description for product " + i)
+                    .price(BigDecimal.valueOf(10000 + random.nextInt(500000)))
+                    .category(category)
+                    .brand(brands[random.nextInt(brands.length)])
+                    .origin(origins[random.nextInt(origins.length)])
+                    .unit(Unit.BAG)
+                    .quantity(random.nextInt(100) + 1)
+                    .imageUrl("https://picsum.photos/400?random=" + i)
+                    .expiryDate(LocalDate.now().plusDays(random.nextInt(1000) + 30))
+                    .available(true)
+                    .build();
+
+            products.add(product);
+        }
+
+        productRepository.saveAll(products);
+
+        log.info("Seeded {} products", products.size());
     }
 }

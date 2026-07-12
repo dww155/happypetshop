@@ -1,6 +1,7 @@
 "use client";
 
 import { useRegisterForm } from "./hooks/useRegisterForm";
+import {PawPrint} from "lucide-react";
 
 export default function RegisterPage() {
   const { formData, errors, isLoading, handleChange, handleSubmit } =
@@ -10,17 +11,19 @@ export default function RegisterPage() {
     `w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition ${
       hasError
         ? "border-red-500 focus:ring-red-400"
-        : "border-gray-300 focus:ring-blue-400"
+        : "border-[#d8c1ab] focus:ring-[#f7b267]"
     }`;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center px-4 py-12">
+    <div className="pet-page min-h-screen flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-lg">
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="pet-card rounded-lg p-8">
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-blue-600 mb-2">🐾</h1>
-            <h2 className="text-3xl font-bold text-gray-800 mb-2">Đăng Ký</h2>
-            <p className="text-gray-600">Tạo tài khoản Happy Pet Shop của bạn</p>
+            <div className="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-lg bg-[#f7b267] text-[#4b3525]">
+              <PawPrint className="h-9 w-9" />
+            </div>
+            <h2 className="text-3xl font-black text-[#3d2b1f] mb-2">Đăng Ký</h2>
+            <p className="text-[#6d5a49]">Tạo tài khoản Happy Pet Shop của bạn</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -34,7 +37,7 @@ export default function RegisterPage() {
               <div>
                 <label
                   htmlFor="firstName"
-                  className="block text-sm font-semibold text-gray-700 mb-2"
+                  className="block text-sm font-semibold text-[#4b3525] mb-2"
                 >
                   Họ <span className="text-gray-400 font-normal">(tuỳ chọn)</span>
                 </label>
@@ -55,7 +58,7 @@ export default function RegisterPage() {
               <div>
                 <label
                   htmlFor="lastName"
-                  className="block text-sm font-semibold text-gray-700 mb-2"
+                  className="block text-sm font-semibold text-[#4b3525] mb-2"
                 >
                   Tên <span className="text-gray-400 font-normal">(tuỳ chọn)</span>
                 </label>
@@ -78,7 +81,7 @@ export default function RegisterPage() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-semibold text-gray-700 mb-2"
+                className="block text-sm font-semibold text-[#4b3525] mb-2"
               >
                 Email <span className="text-red-500">*</span>
               </label>
@@ -100,7 +103,7 @@ export default function RegisterPage() {
             <div>
               <label
                 htmlFor="phone"
-                className="block text-sm font-semibold text-gray-700 mb-2"
+                className="block text-sm font-semibold text-[#4b3525] mb-2"
               >
                 Số điện thoại <span className="text-red-500">*</span>
               </label>
@@ -121,7 +124,7 @@ export default function RegisterPage() {
             <div>
               <label
                 htmlFor="address"
-                className="block text-sm font-semibold text-gray-700 mb-2"
+                className="block text-sm font-semibold text-[#4b3525] mb-2"
               >
                 Địa chỉ <span className="text-gray-400 font-normal">(tuỳ chọn)</span>
               </label>
@@ -143,7 +146,7 @@ export default function RegisterPage() {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-semibold text-gray-700 mb-2"
+                className="block text-sm font-semibold text-[#4b3525] mb-2"
               >
                 Mật khẩu <span className="text-red-500">*</span>
               </label>
@@ -164,7 +167,7 @@ export default function RegisterPage() {
             <div>
               <label
                 htmlFor="confirmPassword"
-                className="block text-sm font-semibold text-gray-700 mb-2"
+                className="block text-sm font-semibold text-[#4b3525] mb-2"
               >
                 Xác nhận mật khẩu <span className="text-red-500">*</span>
               </label>
@@ -187,24 +190,24 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold py-3 rounded-lg hover:from-blue-700 hover:to-blue-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-[#9f5f36] text-white font-bold py-3 rounded-lg hover:bg-[#7d4525] transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? "Đang đăng ký..." : "Đăng Ký"}
             </button>
           </form>
 
           <div className="my-6 flex items-center">
-            <div className="flex-1 border-t border-gray-300"></div>
-            <span className="px-3 text-gray-500 text-sm">hoặc</span>
-            <div className="flex-1 border-t border-gray-300"></div>
+            <div className="flex-1 border-t border-[#ead9c6]"></div>
+            <span className="px-3 text-[#8f7b6b] text-sm">hoặc</span>
+            <div className="flex-1 border-t border-[#ead9c6]"></div>
           </div>
 
           <div className="mt-6 text-center">
-            <p className="text-gray-600">
+            <p className="text-[#6d5a49]">
               Đã có tài khoản?{" "}
               <a
                 href="/login"
-                className="text-blue-600 hover:text-blue-800 font-bold"
+                className="text-[#9f5f36] hover:text-[#6f4a2f] font-bold"
               >
                 Đăng nhập
               </a>

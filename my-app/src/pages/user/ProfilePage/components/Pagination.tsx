@@ -12,7 +12,7 @@ const PaginationControls = ({ current, total, onChange }: PaginationProps) => {
       <button
         onClick={() => onChange(Math.max(1, current - 1))}
         disabled={current === 1}
-        className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 disabled:opacity-50 transition"
+        className="px-4 py-2 rounded-lg bg-[#ead9c6] hover:bg-[#d8c1ab] text-[#3d2b1f] disabled:opacity-50 transition"
       >
         ← Trước
       </button>
@@ -21,7 +21,7 @@ const PaginationControls = ({ current, total, onChange }: PaginationProps) => {
           key={page}
           onClick={() => onChange(page)}
           className={`px-4 py-2 rounded-lg font-semibold transition ${
-            current === page ? "bg-blue-600 text-white" : "bg-gray-200 hover:bg-gray-300"
+            current === page ? "bg-[#9f5f36] text-white" : "bg-[#ead9c6] hover:bg-[#d8c1ab] text-[#3d2b1f]"
           }`}
         >
           {page}
@@ -30,7 +30,7 @@ const PaginationControls = ({ current, total, onChange }: PaginationProps) => {
       <button
         onClick={() => onChange(Math.min(total, current + 1))}
         disabled={current === total}
-        className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 disabled:opacity-50 transition"
+        className="px-4 py-2 rounded-lg bg-[#ead9c6] hover:bg-[#d8c1ab] text-[#3d2b1f] disabled:opacity-50 transition"
       >
         Sau →
       </button>

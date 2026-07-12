@@ -7,6 +7,7 @@ import PetDetailModal from "./components/PetDetailModal";
 import Loader from "../../../components/ui/loader";
 import { getAllPets } from "../../../services/petService";
 import type { PetResponse } from "../../../types/petTypes";
+import {Heart, Search, Sparkles} from "lucide-react";
 
 export default function PetsPage() {
   const [pets, setPets] = useState<PetResponse[]>([]);
@@ -47,10 +48,10 @@ export default function PetsPage() {
   }, [pets, search]);
 
   return (
-    <div className="min-h-screen bg-[#FFF8F0] font-body">
+    <div className="pet-page min-h-screen font-body">
       {error && (
         <div className="max-w-7xl mx-auto px-4 mt-4">
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg flex justify-between items-center shadow">
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex justify-between items-center shadow-sm">
             <span>{error}</span>
             <button
               onClick={() => setError(null)}
@@ -63,31 +64,33 @@ export default function PetsPage() {
       )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">
-            🐾 Thú cưng
+        <div className="mb-8 rounded-lg bg-[#6f4a2f] px-6 py-8 text-white shadow-xl shadow-[#6f4a2f]/15 md:px-10">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-lg bg-white/12 px-3 py-2 text-sm font-semibold text-[#ffe2bd]">
+            <Sparkles className="h-4 w-4" /> Những người bạn đang chờ nhà mới
+          </div>
+          <h1 className="text-3xl font-black mb-2 sm:text-4xl">
+            Thú cưng
           </h1>
-          <p className="text-gray-600 mb-4">
-            Xem danh sách thú cưng đáng yêu đang có tại cửa hàng
+          <p className="text-[#f4ddc6] mb-6 max-w-2xl">
+            Xem danh sách thú cưng đáng yêu đang có tại cửa hàng và chọn người bạn phù hợp với gia đình bạn.
           </p>
           <div className="relative max-w-md">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-              🔍
-            </span>
+            <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[#9f5f36]" />
             <input
               type="text"
               placeholder="Tìm theo tên, loài, giống..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#ff8e53] focus:border-[#ff8e53] outline-none bg-white"
+              className="pet-focus w-full rounded-lg border border-[#d8c1ab] bg-[#fffdf8] py-3 pl-10 pr-4 text-[#3d2b1f] placeholder:text-[#9a8676]"
             />
           </div>
         </div>
 
         <div className="mb-6">
-          <p className="text-gray-700 text-lg">
+          <p className="flex items-center gap-2 text-[#4b3525] text-lg">
+            <Heart className="h-5 w-5 text-[#9f5f36]" />
             Hiển thị{" "}
-            <span className="font-bold text-[#ff8e53]">{filteredPets.length}</span>{" "}
+            <span className="font-bold text-[#9f5f36]">{filteredPets.length}</span>{" "}
             thú cưng
           </p>
         </div>
@@ -103,14 +106,14 @@ export default function PetsPage() {
             ))}
           </div>
         ) : (
-          <div className="bg-white rounded-2xl shadow-md p-12 text-center">
+          <div className="pet-surface rounded-lg p-12 text-center">
             <div className="text-6xl mb-4">🐕</div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">
+            <h2 className="text-2xl font-bold text-[#3d2b1f] mb-2">
               {search.trim()
                 ? "Không tìm thấy thú cưng"
                 : "Chưa có thú cưng nào"}
             </h2>
-            <p className="text-gray-600 mb-6">
+            <p className="text-[#6d5a49] mb-6">
               {search.trim()
                 ? "Thử tìm kiếm với từ khóa khác."
                 : "Vui lòng quay lại sau."}
@@ -118,7 +121,7 @@ export default function PetsPage() {
             {search.trim() && (
               <button
                 onClick={() => setSearch("")}
-                className="bg-[#ff8e53] hover:bg-[#ff7a3d] text-white font-semibold py-2 px-6 rounded-lg transition"
+                className="bg-[#9f5f36] hover:bg-[#7d4525] text-white font-semibold py-2 px-6 rounded-lg transition"
               >
                 Xóa tìm kiếm
               </button>

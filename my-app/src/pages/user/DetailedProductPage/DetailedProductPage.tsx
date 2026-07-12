@@ -7,6 +7,7 @@ import { addOrUpdateCartItem } from "@/services/cartService";
 import { getInfo } from "@/services/customerService";
 import { getProductById } from "@/services/productService";
 import type { ProductResponse } from "@/types/productTypes";
+import {ArrowLeft, CreditCard, Minus, Plus, ShoppingCart} from "lucide-react";
 
 interface CheckoutItem {
   id: string;
@@ -26,10 +27,10 @@ function formatCurrency(value: number): string {
 }
 
 function formatDate(dateString?: string | null): string {
-  if (!dateString) return "Khong co";
+  if (!dateString) return "Không có";
 
   const date = new Date(dateString);
-  if (Number.isNaN(date.getTime())) return "Khong co";
+  if (Number.isNaN(date.getTime())) return "Không có";
 
   return date.toLocaleDateString("vi-VN", {
     year: "numeric",
@@ -60,7 +61,7 @@ export default function DetailedProductPage() {
 
     const fetchProduct = async () => {
       if (!id) {
-        setError("Khong tim thay ma san pham.");
+        setError("Không tìm thấy mã sản phẩm.");
         setLoading(false);
         return;
       }
@@ -79,7 +80,7 @@ export default function DetailedProductPage() {
         if (cancelled) return;
 
         setProduct(null);
-        setError(e instanceof Error ? e.message : "Khong the tai thong tin san pham.");
+        setError(e instanceof Error ? e.message : "Không thể tải thông tin sản phẩm.");
       } finally {
         if (!cancelled) {
           setLoading(false);
@@ -109,7 +110,7 @@ export default function DetailedProductPage() {
     if (!product || product.quantity <= 0) return;
 
     if (!user?.id) {
-      setActionMessage("Vui long dang nhap de them vao gio hang.");
+      setActionMessage("Vui lòng đăng nhập để thêm vào giỏ hàng.");
       return;
     }
 
@@ -124,9 +125,9 @@ export default function DetailedProductPage() {
 
       const refreshedCustomer = await getInfo();
       setUser(refreshedCustomer);
-      setActionMessage("Da them vao gio hang.");
+      setActionMessage("Đã thêm vào giỏ hàng.");
     } catch (e) {
-      setActionMessage(e instanceof Error ? e.message : "Khong the them vao gio hang.");
+      setActionMessage(e instanceof Error ? e.message : "Không thể thêm vào giỏ hàng.");
     } finally {
       setCartLoading(false);
     }
@@ -151,23 +152,23 @@ export default function DetailedProductPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-        <p className="text-lg text-gray-600">Dang tai thong tin san pham...</p>
+      <div className="pet-page min-h-screen flex items-center justify-center px-4">
+        <p className="text-lg text-[#6d5a49]">Đang tải thông tin sản phẩm...</p>
       </div>
     );
   }
 
   if (!product || error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-        <div className="max-w-lg w-full bg-white border border-red-200 rounded-xl p-6 text-center shadow">
-          <p className="text-red-600 font-semibold mb-2">Khong the hien thi san pham</p>
-          <p className="text-gray-600 mb-4">{error ?? "Khong tim thay san pham."}</p>
+      <div className="pet-page min-h-screen flex items-center justify-center px-4">
+        <div className="max-w-lg w-full pet-card rounded-lg p-6 text-center shadow">
+          <p className="text-[#a33b2b] font-semibold mb-2">Không thể hiển thị sản phẩm</p>
+          <p className="text-[#6d5a49] mb-4">{error ?? "Không tìm thấy sản phẩm."}</p>
           <Link
             to="/user/products"
-            className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2 text-white font-medium hover:bg-blue-700 transition"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#9f5f36] px-4 py-2 text-white font-medium hover:bg-[#7d4525] transition"
           >
-            Quay lai danh sach san pham
+            <ArrowLeft className="h-4 w-4" /> Quay lại danh sách sản phẩm
           </Link>
         </div>
       </div>
@@ -175,12 +176,15 @@ export default function DetailedProductPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="pet-page min-h-screen py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+        <Link to="/user/products" className="mb-5 inline-flex items-center gap-2 font-semibold text-[#9f5f36] hover:text-[#6f4a2f]">
+          <ArrowLeft className="h-4 w-4" /> Tất cả sản phẩm
+        </Link>
+        <div className="pet-card rounded-lg overflow-hidden mb-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6 lg:p-8">
             <div className="flex flex-col gap-4">
-              <div className="flex items-center justify-center bg-gray-100 rounded-lg overflow-hidden h-96">
+              <div className="flex items-center justify-center bg-[#f5eadc] rounded-lg overflow-hidden h-96">
                 {product.imageUrl ? (
                   <img
                     src={product.imageUrl}
@@ -188,39 +192,39 @@ export default function DetailedProductPage() {
                     className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                   />
                 ) : (
-                  <span className="text-gray-500 text-lg font-semibold">No image</span>
+                  <span className="text-[#8f7b6b] text-lg font-semibold">Chưa có ảnh</span>
                 )}
               </div>
             </div>
 
             <div className="flex flex-col justify-between">
               <div>
-                <h1 className="text-4xl font-bold text-gray-800 mb-4">{product.name}</h1>
+                <h1 className="text-4xl font-black text-[#3d2b1f] mb-4">{product.name}</h1>
 
                 <div className="mb-6">
-                  <span className="text-4xl font-bold text-blue-600">{formatCurrency(product.price)}</span>
+                  <span className="text-4xl font-black text-[#9f5f36]">{formatCurrency(product.price)}</span>
                 </div>
 
                 <div className="mb-6">
-                  <p className="text-lg text-gray-700">
-                    So luong co san:{" "}
-                    <span className={`font-bold text-xl ${stock > 0 ? "text-green-600" : "text-red-600"}`}>
-                      {stock} san pham
+                  <p className="text-lg text-[#6d5a49]">
+                    Số lượng có sẵn:{" "}
+                    <span className={`font-bold text-xl ${stock > 0 ? "text-[#23684d]" : "text-[#a33b2b]"}`}>
+                      {stock} sản phẩm
                     </span>
                   </p>
-                  {stock === 0 && <p className="text-red-600 font-semibold mt-2">San pham da het hang</p>}
+                  {stock === 0 && <p className="text-[#a33b2b] font-semibold mt-2">Sản phẩm đã hết hàng</p>}
                 </div>
 
                 <div className="mb-6">
-                  <label className="block text-gray-700 font-semibold mb-2">So luong:</label>
+                  <label className="block text-[#4b3525] font-semibold mb-2">Số lượng:</label>
                   <div className="flex items-center gap-4">
                     <button
                       type="button"
                       onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
                       disabled={quantity <= 1 || stock === 0}
-                      className="bg-gray-200 hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-700 font-bold py-2 px-4 rounded-lg transition"
+                      className="bg-[#f5eadc] hover:bg-[#ead9c6] disabled:bg-[#f3ede6] disabled:cursor-not-allowed text-[#4b3525] font-bold p-3 rounded-lg transition"
                     >
-                      -
+                      <Minus className="h-5 w-5" />
                     </button>
                     <input
                       type="number"
@@ -236,66 +240,66 @@ export default function DetailedProductPage() {
                         setQuantity(Math.min(Math.max(next, 1), maxSelectableQuantity));
                       }}
                       disabled={stock === 0}
-                      className="w-20 text-center text-lg font-semibold border-2 border-gray-300 rounded-lg py-2 disabled:bg-gray-50"
+                      className="w-20 text-center text-lg font-semibold border-2 border-[#d8c1ab] rounded-lg py-2 disabled:bg-[#f3ede6]"
                     />
                     <button
                       type="button"
                       onClick={() => setQuantity((prev) => Math.min(prev + 1, maxSelectableQuantity))}
                       disabled={quantity >= maxSelectableQuantity || stock === 0}
-                      className="bg-gray-200 hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-700 font-bold py-2 px-4 rounded-lg transition"
+                      className="bg-[#f5eadc] hover:bg-[#ead9c6] disabled:bg-[#f3ede6] disabled:cursor-not-allowed text-[#4b3525] font-bold p-3 rounded-lg transition"
                     >
-                      +
+                      <Plus className="h-5 w-5" />
                     </button>
                   </div>
                 </div>
 
-                {actionMessage && <p className="mb-4 text-sm font-medium text-blue-600">{actionMessage}</p>}
+                {actionMessage && <p className="mb-4 text-sm font-medium text-[#23684d]">{actionMessage}</p>}
 
                 <div className="flex flex-col sm:flex-row gap-4 mb-6">
                   <button
                     type="button"
                     onClick={handleAddToCart}
                     disabled={stock === 0 || cartLoading}
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-bold py-4 px-6 rounded-lg transition flex items-center justify-center gap-2 text-lg"
+                    className="flex-1 bg-[#9f5f36] hover:bg-[#7d4525] disabled:bg-[#c9b9a6] disabled:cursor-not-allowed text-white font-bold py-4 px-6 rounded-lg transition flex items-center justify-center gap-2 text-lg"
                   >
-                    <span>{cartLoading ? "..." : "Cart"}</span>
-                    Them vao gio hang
+                    {cartLoading ? "..." : <ShoppingCart className="h-5 w-5" />}
+                    Thêm vào giỏ hàng
                   </button>
                   <button
                     type="button"
                     onClick={handlePayment}
                     disabled={stock === 0}
-                    className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-bold py-4 px-6 rounded-lg transition flex items-center justify-center gap-2 text-lg"
+                    className="flex-1 bg-[#2f7d5f] hover:bg-[#23684d] disabled:bg-[#c9b9a6] disabled:cursor-not-allowed text-white font-bold py-4 px-6 rounded-lg transition flex items-center justify-center gap-2 text-lg"
                   >
-                    Thanh toan ngay
+                    <CreditCard className="h-5 w-5" /> Thanh toán ngay
                   </button>
                 </div>
 
-                <div className="bg-gray-100 rounded-lg p-4">
+                <div className="bg-[#f5eadc] rounded-lg p-4">
                   <div className="flex justify-between items-center">
-                    <span className="text-lg font-semibold text-gray-700">Tong tien:</span>
-                    <span className="text-2xl font-bold text-blue-600">{formatCurrency(totalPrice)}</span>
+                    <span className="text-lg font-semibold text-[#4b3525]">Tổng tiền:</span>
+                    <span className="text-2xl font-black text-[#9f5f36]">{formatCurrency(totalPrice)}</span>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6 text-sm text-gray-700">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6 text-sm text-[#6d5a49]">
                   <p>
-                    <span className="font-semibold">Danh muc:</span> {product.categoryName ?? "Khong ro"}
+                    <span className="font-semibold text-[#3d2b1f]">Danh mục:</span> {product.categoryName ?? "Không rõ"}
                   </p>
                   <p>
-                    <span className="font-semibold">Thuong hieu:</span> {product.brand ?? "Khong ro"}
+                    <span className="font-semibold text-[#3d2b1f]">Thương hiệu:</span> {product.brand ?? "Không rõ"}
                   </p>
                   <p>
-                    <span className="font-semibold">Xuat xu:</span> {product.origin ?? "Khong ro"}
+                    <span className="font-semibold text-[#3d2b1f]">Xuất xứ:</span> {product.origin ?? "Không rõ"}
                   </p>
                   <p>
-                    <span className="font-semibold">Don vi:</span> {product.unit ?? "Khong ro"}
+                    <span className="font-semibold text-[#3d2b1f]">Đơn vị:</span> {product.unit ?? "Không rõ"}
                   </p>
                   <p>
-                    <span className="font-semibold">Tao luc:</span> {formatDate(product.createdAt)}
+                    <span className="font-semibold text-[#3d2b1f]">Tạo lúc:</span> {formatDate(product.createdAt)}
                   </p>
                   <p>
-                    <span className="font-semibold">Cap nhat:</span> {formatDate(product.updatedAt)}
+                    <span className="font-semibold text-[#3d2b1f]">Cập nhật:</span> {formatDate(product.updatedAt)}
                   </p>
                 </div>
               </div>
@@ -303,10 +307,10 @@ export default function DetailedProductPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-6 lg:p-8 mb-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Mo ta san pham</h2>
+        <div className="pet-card rounded-lg p-6 lg:p-8 mb-8">
+          <h2 className="text-2xl font-bold text-[#3d2b1f] mb-4">Mô tả sản phẩm</h2>
           <div className="prose max-w-none">
-            <p className="text-gray-700 leading-relaxed text-lg">{product.description || "Chua co mo ta cho san pham nay."}</p>
+            <p className="text-[#6d5a49] leading-relaxed text-lg">{product.description || "Chưa có mô tả cho sản phẩm này."}</p>
           </div>
         </div>
       </div>

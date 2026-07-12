@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import {CalendarCheck, Clock, Sparkles, Star} from "lucide-react";
 
 interface Service {
   id: string;
@@ -133,21 +134,22 @@ export default function ServicesPage() {
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }).map((_, i) => (
-      <span key={i} className={i < Math.floor(rating) ? "text-yellow-400" : "text-gray-300"}>
-        ⭐
-      </span>
+      <Star key={i} className={`h-4 w-4 ${i < Math.floor(rating) ? "fill-[#f7b267] text-[#f7b267]" : "text-[#d8c1ab]"}`} />
     ));
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="pet-page min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Page Header */}
-        <div className="mb-12 text-center">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">
+        <div className="mb-10 rounded-lg bg-[#6f4a2f] px-6 py-8 text-white shadow-xl shadow-[#6f4a2f]/15 md:px-10">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-lg bg-white/12 px-3 py-2 text-sm font-semibold text-[#ffe2bd]">
+            <Sparkles className="h-4 w-4" /> Spa, sức khỏe và chăm sóc tận tâm
+          </div>
+          <h1 className="text-4xl font-black mb-4">
             Dịch vụ của chúng tôi
           </h1>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          <p className="text-[#f4ddc6] text-lg max-w-2xl">
             Khám phá các dịch vụ chăm sóc thú cưng chuyên nghiệp, uy tín từ Happy Pet Shop
           </p>
         </div>
@@ -158,49 +160,49 @@ export default function ServicesPage() {
             <a
               key={service.id}
               href={`/detailedService/${service.id}`}
-              className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="pet-card rounded-lg hover:shadow-xl transition-all duration-300 overflow-hidden group focus:outline-none focus:ring-4 focus:ring-[#f7b267]/35"
               onMouseEnter={() => setHoveredId(service.id)}
               onMouseLeave={() => setHoveredId(null)}
             >
               {/* Image Container */}
-              <div className="relative h-64 overflow-hidden bg-gray-200">
+              <div className="relative h-64 overflow-hidden bg-[#f5eadc]">
                 {/* Image */}
                 <img
                   src={service.image}
                   alt={service.name}
                   className={`w-full h-full object-cover transition-all duration-300 ${
                     hoveredId === service.id
-                      ? "blur-md scale-105"
+                      ? "scale-105"
                       : "blur-0 scale-100"
                   }`}
                 />
 
                 {/* Rating Badge */}
                 {service.rating && (
-                  <div className="absolute top-3 left-3 bg-white shadow-lg rounded-lg px-3 py-1 flex items-center gap-1">
-                    <span className="text-sm font-bold text-gray-800">
+                  <div className="absolute top-3 left-3 bg-[#fffdf8] shadow-lg rounded-lg px-3 py-1 flex items-center gap-1">
+                    <span className="text-sm font-bold text-[#3d2b1f]">
                       {service.rating.toFixed(1)}
                     </span>
-                    <span className="text-yellow-400">⭐</span>
+                    <Star className="h-4 w-4 fill-[#f7b267] text-[#f7b267]" />
                   </div>
                 )}
 
                 {/* Overlay with Book Button - Show on Hover and Focus */}
                 <div
-                  className={`absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center transition-all duration-300 ${
+                  className={`absolute inset-x-4 bottom-4 flex items-center justify-center transition-all duration-300 ${
                     hoveredId === service.id
                       ? "opacity-100"
                       : "opacity-0 pointer-events-none"
                   } group-focus-within:opacity-100`}
                 >
                   <button
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition transform hover:scale-105 flex items-center gap-2"
+                    className="bg-[#9f5f36] hover:bg-[#7d4525] text-white font-bold py-3 px-6 rounded-lg transition flex items-center gap-2 shadow-lg"
                     onClick={(e) => {
                       e.preventDefault();
                       // Navigate handled by Link wrapper
                     }}
                   >
-                    <span>📅</span> Đặt dịch vụ
+                    <CalendarCheck className="h-5 w-5" /> Đặt dịch vụ
                   </button>
                 </div>
               </div>
@@ -208,7 +210,7 @@ export default function ServicesPage() {
               {/* Service Info */}
               <div className="p-5">
                 {/* Name */}
-                <h3 className="text-lg font-bold text-gray-800 mb-2 line-clamp-2 group-hover:text-blue-600 transition">
+                <h3 className="text-lg font-bold text-[#3d2b1f] mb-2 line-clamp-2 group-hover:text-[#9f5f36] transition">
                   {service.name}
                 </h3>
 
@@ -216,26 +218,26 @@ export default function ServicesPage() {
                 {service.rating && (
                   <div className="flex items-center gap-1 mb-3">
                     <div className="flex gap-0.5">{renderStars(service.rating)}</div>
-                    <span className="text-sm text-gray-600">({service.rating})</span>
+                    <span className="text-sm text-[#6d5a49]">({service.rating})</span>
                   </div>
                 )}
 
                 {/* Duration */}
                 {service.duration && (
-                  <p className="text-sm text-gray-600 mb-3 flex items-center gap-2">
-                    <span>⏱️</span> {service.duration}
+                  <p className="text-sm text-[#6d5a49] mb-3 flex items-center gap-2">
+                    <Clock className="h-4 w-4 text-[#9f5f36]" /> {service.duration}
                   </p>
                 )}
 
                 {/* Description */}
-                <p className="text-sm text-gray-600 mb-4 line-clamp-3 h-16">
+                <p className="text-sm text-[#6d5a49] mb-4 line-clamp-3 h-16">
                   {service.description}
                 </p>
 
                 {/* Price */}
-                <div className="border-t pt-4">
-                  <p className="text-xs text-gray-500 mb-1">Giá từ</p>
-                  <span className="text-2xl font-bold text-blue-600">
+                <div className="border-t border-[#ead9c6] pt-4">
+                  <p className="text-xs text-[#8f7b6b] mb-1">Giá từ</p>
+                  <span className="text-2xl font-black text-[#9f5f36]">
                     ₫{formatPrice(service.price)}
                   </span>
                 </div>

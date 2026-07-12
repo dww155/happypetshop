@@ -20,12 +20,12 @@ const normalizeKey = (status: string): StatusKey => {
 const StatusBadge = ({ status }: { status: string }) => {
   const key = normalizeKey(status);
   const styles: Record<StatusKey, string> = {
-    paid: "bg-green-100 text-green-800",
-    pending: "bg-orange-100 text-orange-800",
+    paid: "bg-[#dff3e8] text-[#23684d]",
+    pending: "bg-[#fff0d8] text-[#9f5f36]",
     cancelled: "bg-red-100 text-red-800",
     failed: "bg-amber-100 text-amber-900",
     refunded: "bg-violet-100 text-violet-800",
-    other: "bg-gray-100 text-gray-800",
+    other: "bg-[#f5eadc] text-[#4b3525]",
   };
 
   const labels: Record<Exclude<StatusKey, "other">, string> = {

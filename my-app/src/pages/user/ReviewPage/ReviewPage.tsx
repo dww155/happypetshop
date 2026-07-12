@@ -27,11 +27,11 @@ export default function ReviewPage() {
   } = useReview();
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
+    <main className="pet-page min-h-screen py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">Xác nhận đơn hàng</h1>
-          <p className="text-gray-600 mt-2">Kiểm tra thông tin sản phẩm, thanh toán và giao hàng trước khi đặt.</p>
+          <h1 className="text-3xl font-black text-[#3d2b1f]">Xác nhận đơn hàng</h1>
+          <p className="text-[#6d5a49] mt-2">Kiểm tra thông tin sản phẩm, thanh toán và giao hàng trước khi đặt.</p>
         </div>
 
         {error && (
@@ -41,46 +41,46 @@ export default function ReviewPage() {
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-6">
-            <h2 className="text-lg font-bold text-gray-800 mb-4">Sản phẩm đã chọn</h2>
+          <div className="lg:col-span-2 pet-card rounded-lg p-6">
+            <h2 className="text-lg font-bold text-[#3d2b1f] mb-4">Sản phẩm đã chọn</h2>
 
             {loading ? (
-              <div className="text-gray-500">Đang tải thông tin đơn hàng...</div>
+              <div className="text-[#6d5a49]">Đang tải thông tin đơn hàng...</div>
             ) : review?.reviewDetails?.length ? (
               <div className="space-y-4">
                 {review.reviewDetails.map((item) => (
-                  <div key={`${item.productId}-${item.quantity}`} className="flex gap-4 border-b border-gray-100 pb-4">
+                  <div key={`${item.productId}-${item.quantity}`} className="flex gap-4 border-b border-[#ead9c6] pb-4">
                     <img
                       src={item.imageUrl || "https://placehold.co/100x100?text=Pet"}
                       alt={item.productName}
-                      className="w-20 h-20 rounded-lg object-cover border border-gray-200"
+                      className="w-20 h-20 rounded-lg object-cover border border-[#ead9c6]"
                     />
                     <div className="flex-1">
-                      <p className="font-semibold text-gray-800">{item.productName}</p>
-                      <p className="text-sm text-gray-600">Số lượng: {item.quantity}</p>
-                      <p className="text-sm text-gray-600">Đơn giá: {formatCurrency(item.unitPrice)}</p>
+                      <p className="font-semibold text-[#3d2b1f]">{item.productName}</p>
+                      <p className="text-sm text-[#6d5a49]">Số lượng: {item.quantity}</p>
+                      <p className="text-sm text-[#6d5a49]">Đơn giá: {formatCurrency(item.unitPrice)}</p>
                       {!!item.discountAmount && (
                         <p className="text-sm text-emerald-600">Giảm giá: -{formatCurrency(item.discountAmount)}</p>
                       )}
                     </div>
-                    <div className="font-bold text-gray-800">{formatCurrency(item.totalPrice - (item.discountAmount || 0))}</div>
+                    <div className="font-bold text-[#3d2b1f]">{formatCurrency(item.totalPrice - (item.discountAmount || 0))}</div>
                   </div>
                 ))}
               </div>
             ) : (
-              <div className="text-gray-500">Không có sản phẩm để thanh toán.</div>
+              <div className="text-[#6d5a49]">Không có sản phẩm để thanh toán.</div>
             )}
           </div>
 
-          <div className="bg-white rounded-xl border border-gray-200 p-6 h-fit sticky top-20">
-            <h2 className="text-lg font-bold text-gray-800 mb-4">Thanh toán và giao hàng</h2>
+          <div className="pet-card rounded-lg p-6 h-fit sticky top-24">
+            <h2 className="text-lg font-bold text-[#3d2b1f] mb-4">Thanh toán và giao hàng</h2>
 
             <div className="mb-4">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Phương thức thanh toán</label>
+              <label className="block text-sm font-semibold text-[#4b3525] mb-2">Phương thức thanh toán</label>
               <select
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+                className="w-full border border-[#d8c1ab] rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#f7b267] outline-none bg-[#fffdf8]"
               >
                 <option value="COD">Thanh toán khi nhận hàng (COD)</option>
                 <option value="QR_Scanning">Quét QR</option>
@@ -88,9 +88,9 @@ export default function ReviewPage() {
             </div>
 
             <div className="mb-4">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Địa chỉ giao hàng</label>
+              <label className="block text-sm font-semibold text-[#4b3525] mb-2">Địa chỉ giao hàng</label>
               <div className="space-y-2 mb-2">
-                <label className="flex items-center gap-2 text-sm text-gray-700">
+                <label className="flex items-center gap-2 text-sm text-[#6d5a49]">
                   <input
                     type="radio"
                     checked={useDefaultAddress}
@@ -98,7 +98,7 @@ export default function ReviewPage() {
                   />
                   Dùng địa chỉ mặc định
                 </label>
-                <label className="flex items-center gap-2 text-sm text-gray-700">
+                <label className="flex items-center gap-2 text-sm text-[#6d5a49]">
                   <input
                     type="radio"
                     checked={!useDefaultAddress}
@@ -113,7 +113,7 @@ export default function ReviewPage() {
                   value={newAddress}
                   onChange={(e) => setNewAddress(e.target.value)}
                   rows={3}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+                  className="w-full border border-[#d8c1ab] rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#f7b267] outline-none bg-[#fffdf8]"
                   placeholder="Nhập địa chỉ giao hàng mới"
                 />
               )}
@@ -121,20 +121,20 @@ export default function ReviewPage() {
               <button
                 type="button"
                 onClick={refreshReview}
-                className="mt-2 text-sm text-blue-600 hover:text-blue-700 font-semibold"
+                className="mt-2 text-sm text-[#9f5f36] hover:text-[#6f4a2f] font-semibold"
               >
                 Cập nhật xem trước
               </button>
             </div>
 
-            <div className="border-t border-gray-200 pt-4 space-y-2 mb-4">
+            <div className="border-t border-[#ead9c6] pt-4 space-y-2 mb-4">
               <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Tạm tính</span>
+                <span className="text-[#6d5a49]">Tạm tính</span>
                 <span className="font-semibold">{formatCurrency(review?.totalAmount ?? 0)}</span>
               </div>
               <div className="flex justify-between text-base">
-                <span className="text-gray-800 font-bold">Thành tiền</span>
-                <span className="text-red-600 font-bold">{formatCurrency(review?.realAmount ?? 0)}</span>
+                <span className="text-[#3d2b1f] font-bold">Thành tiền</span>
+                <span className="text-[#9f5f36] font-black">{formatCurrency(review?.realAmount ?? 0)}</span>
               </div>
             </div>
 
@@ -142,12 +142,12 @@ export default function ReviewPage() {
               type="button"
               disabled={placingOrder || loading}
               onClick={placeOrder}
-              className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-bold disabled:opacity-60"
+              className="w-full bg-[#9f5f36] hover:bg-[#7d4525] text-white py-3 rounded-lg font-bold disabled:opacity-60"
             >
               {placingOrder ? "Đang đặt hàng..." : "Đặt hàng"}
             </button>
 
-            <Link to="/user/cart" className="block text-center mt-3 text-sm text-blue-600 hover:text-blue-700">
+            <Link to="/user/cart" className="block text-center mt-3 text-sm text-[#9f5f36] hover:text-[#6f4a2f]">
               ← Quay lại giỏ hàng
             </Link>
           </div>
