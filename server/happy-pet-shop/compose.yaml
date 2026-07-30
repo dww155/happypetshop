@@ -1,12 +1,14 @@
 services:
-  app:
-    build: .
-    container_name: happy-pet-shop
+  postgres:
+    image: postgres:17
     ports:
-      - "8080:8080"
+      - "5432:5432"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://host.docker.internal:5432/happy_pet_shop
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
-      JWT_KEY: ZXZlbnR0aHJlYWRvbGRub25lZmVuY2VmYWlybHl0b3dlcmFiaWxpdHlmaW5kYmFsbHM\=
-      SPRING_PROFILES_ACTIVE: docker
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: happy_pet_shop
+
+  redis:
+    image: redis:8
+    ports:
+      - "6379:6379"

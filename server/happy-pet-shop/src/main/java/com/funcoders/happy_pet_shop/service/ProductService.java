@@ -59,6 +59,10 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    @Cacheable(
+            value = "products",
+            key = "'page:' + #page + ':size:' + #size"
+    )
     public List<ProductResponse> getAllProductsPaginated(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return productRepository.findAll(pageable)

@@ -51,7 +51,7 @@ export default function ProfilePage() {
             >
               Tổng quan
             </button>
-            <button
+            {/* <button
               onClick={() => setActiveTab("addresses")}
               className={`py-4 px-2 font-semibold transition border-b-2 ${
                 activeTab === "addresses"
@@ -72,7 +72,7 @@ export default function ProfilePage() {
               aria-selected={activeTab === "invoices"}
             >
               Hóa đơn
-            </button>
+            </button> */}
           </div>
         </div>
 
