@@ -33,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -157,7 +158,9 @@ public class AuthService {
         JWSObject jwsObject = new JWSObject(header, payload);
 
         try {
-            jwsObject.sign(new MACSigner(SIGNER_KEY.getBytes()));
+            JWSSigner signer = new MACSigner(SIGNER_KEY.getBytes());
+
+            jwsObject.sign(signer);
             return jwsObject.serialize();
         } catch (JOSEException e) {
             AuthService.log.error("Cannot create token", e);

@@ -17,7 +17,7 @@ public class RedisConfig {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        RedisSerializer<Object> serializer1 = new GenericJacksonJsonRedisSerializer(objectMapper);
+        RedisSerializer<Object> serializer = new GenericJacksonJsonRedisSerializer(objectMapper);
 
         RedisCacheConfiguration config =
                 RedisCacheConfiguration.defaultCacheConfig()
@@ -27,7 +27,7 @@ public class RedisConfig {
                         )
                         .serializeValuesWith(
                                 RedisSerializationContext.SerializationPair
-                                        .fromSerializer(serializer1)
+                                        .fromSerializer(serializer)
                         );
 
 
