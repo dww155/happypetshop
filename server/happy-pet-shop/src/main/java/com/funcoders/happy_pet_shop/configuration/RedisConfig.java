@@ -1,8 +1,5 @@
 package com.funcoders.happy_pet_shop.configuration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +7,7 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.*;
+import tools.jackson.databind.ObjectMapper;
 
 @Configuration
 public class RedisConfig {
@@ -19,17 +17,7 @@ public class RedisConfig {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        // Hỗ trợ LocalDate, LocalDateTime, Instant...
-        objectMapper.registerModule(new JavaTimeModule());
-
-        // Lưu date dạng "2026-08-01" thay vì timestamp
-        objectMapper.disable(
-                SerializationFeature.WRITE_DATES_AS_TIMESTAMPS
-        );
-
-        GenericJackson2JsonRedisSerializer serializer =
-                new GenericJackson2JsonRedisSerializer(objectMapper);
-
+        RedisSerializer<Object> serializer1 = new GenericJacksonJsonRedisSerializer(objectMapper);
 
         RedisCacheConfiguration config =
                 RedisCacheConfiguration.defaultCacheConfig()
@@ -39,7 +27,7 @@ public class RedisConfig {
                         )
                         .serializeValuesWith(
                                 RedisSerializationContext.SerializationPair
-                                        .fromSerializer(serializer)
+                                        .fromSerializer(serializer1)
                         );
 
 
