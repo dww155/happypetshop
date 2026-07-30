@@ -52,6 +52,7 @@ public class ProductService {
         return productMapper.toResponse(product);
     }
 
+    @Cacheable(value = "products")
     public List<ProductResponse> getAllProducts() {
         return productRepository.findAll()
                 .stream()
