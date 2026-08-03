@@ -1,5 +1,6 @@
 package com.funcoders.happy_pet_shop.configuration;
 
+import org.springframework.boot.cache.autoconfigure.CacheProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,13 +22,13 @@ public class RedisConfig {
 
         RedisCacheConfiguration config =
                 RedisCacheConfiguration.defaultCacheConfig()
-                        .serializeKeysWith(
-                                RedisSerializationContext.SerializationPair
-                                        .fromSerializer(new StringRedisSerializer())
+                        .serializeKeysWith(RedisSerializationContext
+                                .SerializationPair
+                                .fromSerializer(new StringRedisSerializer())
                         )
-                        .serializeValuesWith(
-                                RedisSerializationContext.SerializationPair
-                                        .fromSerializer(serializer)
+                        .serializeValuesWith(RedisSerializationContext
+                                .SerializationPair
+                                .fromSerializer(serializer)
                         );
 
 
