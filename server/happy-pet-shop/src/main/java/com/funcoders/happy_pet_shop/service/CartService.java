@@ -16,6 +16,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,9 +36,11 @@ public class CartService {
     CartMapper cartMapper;
 
     @Transactional(readOnly = true)
-    public CartResponse getCartByCustomerId(UUID customerId) {
+    public CartResponse getCartByCustomer_User_Username() {
 
-        Cart cart = cartRepository.findByCustomer_Id(customerId)
+        String username = Objects.requireNonNull(SecurityContextHolder.getContext().getAuthentication()).getName();
+
+        Cart cart = cartRepository.findByCustomer_UserUsername(username)
                 .orElseThrow(() -> new AppException(ErrorType.CART_NOT_FOUND));
 
         return cartMapper.toResponse(cart);
@@ -69,12 +72,14 @@ public class CartService {
     }
 
     @Transactional
-    public CartResponse addProduct(UUID customerId, CartRequest request) {
+    public CartResponse addProduct(CartRequest request) {
         UUID productId = request.getProductId();
         int quantity = request.getQuantity();
 
         // find cart
-        Cart cart = cartRepository.findByCustomer_Id(customerId)
+        String username = Objects.requireNonNull(SecurityContextHolder.getContext().getAuthentication()).getName();
+
+        Cart cart = cartRepository.findByCustomer_UserUsername(username)
                 .orElseThrow(() -> new AppException(ErrorType.CART_NOT_FOUND));
 
 

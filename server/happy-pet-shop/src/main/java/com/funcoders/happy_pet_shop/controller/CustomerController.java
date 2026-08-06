@@ -73,11 +73,10 @@ public class CustomerController {
 
     @PostMapping("/{customerId}/items")
     public ApiResponse<CartResponse> addProductToCart(
-            @PathVariable UUID customerId,
             @RequestBody CartRequest request
     ) {
 
-        CartResponse response = cartService.addProduct(customerId, request);
+        CartResponse response = cartService.addProduct(request);
 
         return new ApiResponse<>(response, "Add product successfully");
     }

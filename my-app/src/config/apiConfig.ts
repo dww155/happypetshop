@@ -55,7 +55,7 @@ export const API_CONFIG = {
             GET_ALL: "/invoices",
             GET_BY_ID: (id: string) => `/invoices/${id}`,
             UPDATE_STATUS: (id: string) => `/invoices/${id}`,
-            GET_BY_CUSTOMER: (customerId: string) => `/invoices/customer/${customerId}`,
+            GET_BY_CUSTOMER: `/invoices/customer`,
             DELETE: (id: string) => `/invoices/${id}`,
         },
 

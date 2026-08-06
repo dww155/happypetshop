@@ -68,7 +68,8 @@ public class Invoice {
     @OneToMany(
             mappedBy = "invoice",
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
     )
     Set<InvoiceDetail> invoiceDetails = new HashSet<>();
 

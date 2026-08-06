@@ -78,7 +78,7 @@ export const getInvoicesByCustomerId = async (
     customerId: string
 ): Promise<InvoiceResponse[]> => {
     const res = await apiClient.get<ApiResponse<InvoiceResponse[]>>(
-        API_CONFIG.ENDPOINTS.INVOICE.GET_BY_CUSTOMER(customerId)
+        API_CONFIG.ENDPOINTS.INVOICE.GET_BY_CUSTOMER
     );
     return res.data?.data ?? [];
 };
