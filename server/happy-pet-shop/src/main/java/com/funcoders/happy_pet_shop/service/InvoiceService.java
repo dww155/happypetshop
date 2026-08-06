@@ -15,6 +15,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -319,8 +321,9 @@ public class InvoiceService {
     }
 
     @Transactional(readOnly = true)
-    public List<InvoiceResponse> getInvoiceByCustomer_Id(UUID id) {
-        List<Invoice> invoices = invoiceRepository.findAllByCustomer_Id(id);
+    public List<InvoiceResponse> getInvoiceByCustomer_Id() {
+        String username = Objects.requireNonNull(SecurityContextHolder.getContext().getAuthentication()).getName();
+        List<Invoice> invoices = invoiceRepository.findAllByCustomer_User_Username(username);
 
         return invoices.stream().map(invoiceMapper::toResponse).toList();
     }

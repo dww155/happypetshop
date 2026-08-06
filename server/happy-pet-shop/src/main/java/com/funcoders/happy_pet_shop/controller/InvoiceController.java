@@ -56,9 +56,9 @@ public class InvoiceController {
         return new ApiResponse<>(responses, "Get all invoices successfully");
     }
 
-    @GetMapping("/customer/{id}")
-    public ApiResponse<List<InvoiceResponse>> getInvoiceByCustomerId(@PathVariable UUID id) {
-        List<InvoiceResponse> responses = invoiceService.getInvoiceByCustomer_Id(id);
+    @GetMapping("/customer")
+    public ApiResponse<List<InvoiceResponse>> getInvoiceByCustomerId() {
+        List<InvoiceResponse> responses = invoiceService.getInvoiceByCustomer_Id();
         return new ApiResponse<>(responses, "Get invoices successfully");
     }
 
