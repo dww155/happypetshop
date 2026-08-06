@@ -64,10 +64,6 @@ public class Invoice {
     @Column(nullable = false, length = 20)
     PaymentStatus status = PaymentStatus.PENDING;
 
-    // ===== THỜI GIAN =====
-    @Column(nullable = false, updatable = false)
-    LocalDateTime createdAt;
-
     // ===== CHI TIẾT HÓA ĐƠN =====
     @OneToMany(
             mappedBy = "invoice",
@@ -75,6 +71,10 @@ public class Invoice {
             orphanRemoval = true
     )
     Set<InvoiceDetail> invoiceDetails = new HashSet<>();
+
+    // ===== THỜI GIAN =====
+    @Column(nullable = false, updatable = false)
+    LocalDateTime createdAt;
 
     // ===== LIFECYCLE =====
     @PrePersist
