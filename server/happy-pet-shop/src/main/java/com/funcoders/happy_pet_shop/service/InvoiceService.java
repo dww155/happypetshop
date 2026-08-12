@@ -15,7 +15,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +45,20 @@ public class InvoiceService {
 
     @Transactional
     public InvoiceResponse createInvoice(InvoiceCreationRequest request) {
+
+        // ===== 0. Race condition solve =====
+        for (InvoiceDetailCreationRequest detail: request.getInvoiceDetails()) {
+            UUID productId = detail.getProductId();
+            if (Objects.isNull(productId))
+                continue;
+
+            int quantity = detail.getQuantity();
+
+            int changedRows = productRepository.decreaseQuantity(detail.getProductId(), detail.getQuantity());
+
+            if (changedRows <= 0)
+                throw new AppException(ErrorType.PRODUCT_OUT_OF_STOCK);
+        }
 
         // ===== 1. Find customer =====
         Customer customer = customerRepository.findById(request.getCustomerId())
@@ -139,8 +152,6 @@ public class InvoiceService {
                 if (product.getQuantity() < detailRequest.getQuantity()) {
                     throw new AppException(ErrorType.PRODUCT_NOT_AVAILABLE);
                 }
-
-                product.setQuantity(product.getQuantity() - detailRequest.getQuantity());
 
                 detail.setProduct(product);
                 detail.setQuantity(detailRequest.getQuantity());
