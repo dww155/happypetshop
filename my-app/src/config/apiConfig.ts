@@ -15,7 +15,7 @@ export const API_CONFIG = {
             GET_BY_ID: (id: string) => `/users/${id}`,
             GET_INFO: "/users/info",
             UPDATE: (id: string) => `/users/${id}`,
-            UPDATE_PASSWORD: (id: string) => `/users/${id}`,
+            UPDATE_PASSWORD: (id: string) => `/users/passwd/${id}`,
             DELETE: (id: string) => `/users/${id}`,
         },
 

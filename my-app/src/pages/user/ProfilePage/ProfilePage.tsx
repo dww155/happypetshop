@@ -6,9 +6,12 @@ import ProfileHeader from "./components/ProfileHeader";
 import AddressList from "./components/AddressList";
 import InvoiceHistory from "./components/InvoiceHistory";
 import OverviewTab from "./components/overview";
+import ChangePasswordForm from "./components/ChangePasswordForm";
+
+type ProfileTab = "overview" | "addresses" | "invoices" | "password";
 
 export default function ProfilePage() {
-  const [activeTab, setActiveTab] = useState<"overview" | "addresses" | "invoices">("overview");
+  const [activeTab, setActiveTab] = useState<ProfileTab>("overview");
   const { user, loading } = useProfile();
 
   if (loading) {
@@ -51,6 +54,17 @@ export default function ProfilePage() {
             >
               Tổng quan
             </button>
+            <button
+              onClick={() => setActiveTab("password")}
+              className={`py-4 px-2 font-semibold transition border-b-2 ${
+                activeTab === "password"
+                  ? "text-[#9f5f36] border-[#9f5f36]"
+                  : "text-[#6d5a49] border-transparent hover:text-[#3d2b1f]"
+              }`}
+              aria-selected={activeTab === "password"}
+            >
+              Đổi mật khẩu
+            </button>
             {/* <button
               onClick={() => setActiveTab("addresses")}
               className={`py-4 px-2 font-semibold transition border-b-2 ${
@@ -84,6 +98,10 @@ export default function ProfilePage() {
           {activeTab === "addresses" && <AddressList />}
 
           {activeTab === "invoices" && <InvoiceHistory />}
+
+          {activeTab === "password" && (
+            <ChangePasswordForm userId={user.user.id} />
+          )}
         </div>
       </div>
     </div>
