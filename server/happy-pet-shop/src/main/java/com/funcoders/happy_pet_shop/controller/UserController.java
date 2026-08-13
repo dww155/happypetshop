@@ -59,8 +59,11 @@ public class UserController {
         return new ApiResponse<>(response, "User details");
     }
 
-    @PostMapping("/{id}")
-    public ApiResponse<Void> updatePassword(@PathVariable UUID id, ChangePasswordRequest request) {
+    @PostMapping("/passwd/{id}")
+    public ApiResponse<Void> updatePassword(
+            @PathVariable UUID id,
+            @Valid @RequestBody ChangePasswordRequest request
+    ) {
         userService.updatePassword(id, request);
         return new ApiResponse<>(null, "Update password successfully");
     }
