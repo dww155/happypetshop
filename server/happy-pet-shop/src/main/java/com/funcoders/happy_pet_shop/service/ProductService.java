@@ -13,6 +13,7 @@ import com.funcoders.happy_pet_shop.repository.ProductRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -74,6 +75,7 @@ public class ProductService {
 
     @Transactional
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @CachePut(value = "products", key = "#id")
     public ProductResponse updateProduct(UUID id, ProductUpdateRequest request) {
 //        SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(grantedAuthority -> {return grantedAuthority.toString();});
 
