@@ -13,6 +13,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.apache.logging.log4j.CloseableThreadContext;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,6 +50,7 @@ public class UserService {
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @Transactional(readOnly = true)
+    @Cacheable(value = "users", key = "#id")
     public UserResponse getUserById(UUID id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorType.NOT_FOUND));
@@ -56,6 +59,7 @@ public class UserService {
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @Transactional(readOnly = true)
+    @Cacheable(value = "users")
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll()
                 .stream()
@@ -65,6 +69,7 @@ public class UserService {
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @Transactional
+    @Cacheable(value = "users", key = "#id")
     public void deleteUser(UUID id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorType.USER_NOT_FOUND));
@@ -73,6 +78,7 @@ public class UserService {
     }
 
     @Transactional
+    @CachePut(value = "users", key = "#id")
     public UserResponse updateUser(UUID id, UserUpdateRequest request) {
         // get user from database
         User user = userRepository.findById(id)
