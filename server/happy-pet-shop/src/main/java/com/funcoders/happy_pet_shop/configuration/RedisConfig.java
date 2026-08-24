@@ -1,6 +1,5 @@
 package com.funcoders.happy_pet_shop.configuration;
 
-import org.springframework.boot.cache.autoconfigure.CacheProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +16,6 @@ public class RedisConfig {
     public CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
 
         ObjectMapper objectMapper = new ObjectMapper();
-
         RedisSerializer<Object> serializer = new GenericJacksonJsonRedisSerializer(objectMapper);
 
         RedisCacheConfiguration config =

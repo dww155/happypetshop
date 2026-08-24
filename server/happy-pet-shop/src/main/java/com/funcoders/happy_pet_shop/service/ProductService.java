@@ -13,6 +13,7 @@ import com.funcoders.happy_pet_shop.repository.ProductRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
@@ -47,6 +48,7 @@ public class ProductService {
         return productMapper.toResponse(productRepository.save(productEntity));
     }
 
+    @Cacheable(value = "products", key = "#id")
     public ProductResponse getProductById(UUID id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorType.NOT_FOUND));
@@ -95,6 +97,7 @@ public class ProductService {
 
     @Transactional
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @CacheEvict(value = "products", key = "#id")
     public void deleteProduct(UUID id) {
         if (!productRepository.existsById(id)) {
             throw new AppException(ErrorType.NOT_FOUND);
