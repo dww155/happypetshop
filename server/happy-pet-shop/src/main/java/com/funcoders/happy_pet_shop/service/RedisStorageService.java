@@ -14,7 +14,7 @@ import java.time.Duration;
 public class RedisStorageService {
     RedisTemplate<String, String> redisTemplate;
 
-    public void setCache(String key, String value) {
-        redisTemplate.opsForValue().set(key, value, Duration.ofMinutes(3));
+    public void setCache(String key, String value, long exp) {
+        redisTemplate.opsForValue().set(key, value, Duration.ofMinutes(exp));
     }
 }
