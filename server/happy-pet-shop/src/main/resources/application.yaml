@@ -40,13 +40,12 @@ spring:
 
         consumer:
             group-id: order-group
-            auto-offset-reset: earliest
-
+            auto-offset-reset: latest
             key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
             value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-
             properties:
                 spring.json.trusted.packages: "*"
+                spring.json.value.default.type: com.funcoders.happy_pet_shop.dto.request.KafkaEvent
 
     security:
         oauth2:
