@@ -1,6 +1,6 @@
 package com.funcoders.happy_pet_shop.service;
 
-import com.funcoders.happy_pet_shop.dto.request.KafkaEvent;
+import com.funcoders.happy_pet_shop.kafkaDTO.KafkaEvent;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
