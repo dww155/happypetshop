@@ -1,4 +1,4 @@
-package com.funcoders.happy_pet_shop.dto.request;
+package com.funcoders.happy_pet_shop.kafkaDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
