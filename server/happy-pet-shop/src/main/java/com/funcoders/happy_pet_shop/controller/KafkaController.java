@@ -1,7 +1,7 @@
 package com.funcoders.happy_pet_shop.controller;
 
 import com.funcoders.happy_pet_shop.kafkaDTO.KafkaEvent;
-import com.funcoders.happy_pet_shop.service.KafkaProducerService;
+import com.funcoders.happy_pet_shop.kafka_producer.KafkaProducerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +23,8 @@ public class KafkaController {
                 .timestamp(LocalDateTime.now())
                 .build();
 
-//        kafkaProducerService.sendEvent(event);
-//        phai code them cais kafka template
+        kafkaProducerService.sendEvent(event);
+
         return ResponseEntity.ok("Event đã được gửi tới Kafka!");
     }
 }
