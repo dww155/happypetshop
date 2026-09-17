@@ -1,4 +1,4 @@
-package com.funcoders.happy_pet_shop.service;
+package com.funcoders.happy_pet_shop.kafka_consumer;
 
 import com.funcoders.happy_pet_shop.kafkaDTO.KafkaEvent;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -15,8 +15,5 @@ public class KafkaConsumerService {
         log.info("  - Event Type: {}", event.getEventType());
         log.info("  - Message: {}", event.getMessage());
         log.info("  - Timestamp: {}", event.getTimestamp());
-
-        // Xử lý logic nghiệp vụ tại đây dựa theo eventType
-        // Ví dụ: switch(event.getEventType()) { case "ORDER_CREATED": ... }
     }
 }
