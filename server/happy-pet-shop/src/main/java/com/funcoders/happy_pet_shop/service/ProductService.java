@@ -18,10 +18,12 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -44,6 +46,11 @@ public class ProductService {
                 .orElseThrow(() -> new AppException(ErrorType.INVALID_CATEGORY));
 
         productEntity.setCategory(category);
+
+//        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+//        Object object = new Object();
+//
+//        redisTemplate.opsForValue().set("key", object, Duration.ofMinutes(100));
 
         return productMapper.toResponse(productRepository.save(productEntity));
     }
