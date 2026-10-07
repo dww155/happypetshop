@@ -13,17 +13,18 @@ spring:
         properties:
             hibernate:
                 format_sql: true
-    redis:
-        host: ${SPRING_REDIS_HOST}
-        port: ${SPRING_REDIS_PORT}
-#        password: root   # Optional
-        timeout: 2000ms
-        lettuce:
-            pool:
-                max-active: 8
-                max-idle: 8
-                min-idle: 0
-                max-wait: -1ms
+    data:
+        redis:
+            host: localhost
+            port: 6379
+            database: 0
+            timeout: 3000ms
+            lettuce:
+                pool:
+                    max-active: 8
+                    max-idle: 8
+                    min-idle: 0
+                    max-wait: -1ms
     cache:
         type: redis
         redis:
